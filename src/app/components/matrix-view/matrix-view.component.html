@@ -1,0 +1,11 @@
+<table>
+  @for (row of matrix.matrix; track $index) {
+  <tr>
+    @for (item of row; track $index) {
+      <td><div class="content">
+        {{item}}
+      </div></td>
+    }
+  </tr>
+  }
+</table>

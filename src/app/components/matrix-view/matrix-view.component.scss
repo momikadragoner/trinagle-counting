@@ -1,0 +1,15 @@
+table {
+  width: 100%;
+}
+
+td {
+  position: relative;
+}
+
+td .content {
+  aspect-ratio: 1 / 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
