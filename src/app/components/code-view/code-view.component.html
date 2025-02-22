@@ -1,0 +1,10 @@
+<div class="code">
+  <ol>
+    @for (line of formattedCode; track $index) {
+      <div class="line">
+        <li [innerHTML]="line" [classList]="currentLine == $index ? 'selected' : ''"></li>
+      </div>
+    }
+  </ol>
+</div>
+<media-control [(currentStep)]="currentStep" (currentStepChange)="stepChaneHandler($event)" [max]="stepCount ?? 20"></media-control>

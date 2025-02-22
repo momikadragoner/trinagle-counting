@@ -1,0 +1,46 @@
+.container {
+  margin: 2rem;
+  padding: 2rem;
+  box-shadow: .5rem .5rem 1rem black;
+  border-radius: 2rem;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  box-shadow: .3rem;
+}
+
+.btn {
+  box-shadow: none;
+  margin: .05rem;
+}
+
+.btn:hover {
+  box-shadow: none;
+}
+
+.btn-left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.btn-right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.btn-middle {
+  border-radius: 0;
+}
+
+.slider {
+  width: 100%;
+}

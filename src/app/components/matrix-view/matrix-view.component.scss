@@ -1,15 +1,38 @@
 table {
   width: 100%;
+  border: none;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
-td {
+.container {
+  padding: 2rem;
+  padding-left: .5rem;
+}
+
+td, th {
   position: relative;
+  padding: 0;
 }
 
-td .content {
+td :hover {
+  transition: all .2s;
+  background-color: rgb(60, 60, 60);
+}
+
+td .content, th .content{
+  transition: all .2s;
   aspect-ratio: 1 / 1;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.col-heading {
+  border-bottom: .2rem white solid;
+}
+
+.row-heading {
+  border-right: .2rem white solid;
 }

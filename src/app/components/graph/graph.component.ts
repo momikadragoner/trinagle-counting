@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as d3 from 'd3';
+import { Link } from '../../model/link.model';
+import { Node } from '../../model/node.model';
+import { GraphConverterService } from '../../services/graph-converter.service';
 
 @Component({
   selector: 'graph',
@@ -8,30 +11,15 @@ import * as d3 from 'd3';
   styleUrl: './graph.component.scss'
 })
 export class GraphComponent implements OnInit {
-  constructor() { }
+  @Input() matrix:number[][] = [];
+
+  gcs:GraphConverterService = new GraphConverterService();
 
   ngOnInit(): void {
-    interface Node extends d3.SimulationNodeDatum {
-      id: number;
-    }
 
-    interface Link extends d3.SimulationLinkDatum<d3.SimulationNodeDatum>{
-      source: Node;
-      target: Node;
-    }
-
-    const nodes: Node[] = [
-      { id: 0 },
-      { id: 1 },
-      { id: 2 },
-      { id: 3 },
-    ];
-
-    const links: Link[] = [
-      { source: nodes[0], target: nodes[1] },
-      { source: nodes[1], target: nodes[2] },
-      { source: nodes[1], target: nodes[3] },
-    ];
+    const data = this.gcs.MatrixToNodes(this.matrix);
+    const nodes: Node[] = data.nodes;
+    const links: Link[] = data.links;
 
     const width = 250;
     const height = 250;

@@ -1,11 +1,31 @@
-<table>
-  @for (row of matrix.matrix; track $index) {
-  <tr>
-    @for (item of row; track $index) {
-      <td><div class="content">
-        {{item}}
-      </div></td>
+<div class="container">
+  <table>
+    <tr>
+      <th></th>
+      @for (item of matrix; track $index) {
+      <th class="col-heading">
+        <div class="content">
+          {{$index}}
+        </div>
+      </th>
+      }
+    </tr>
+    @for (row of matrix; track $index) {
+    <tr>
+      <th class="row-heading">
+        <div class="content">
+          {{$index}}
+        </div>
+      </th>
+
+      @for (item of row; track $index) {
+      <td>
+        <div class="content">
+          {{item}}
+        </div>
+      </td>
+      }
+    </tr>
     }
-  </tr>
-  }
-</table>
+  </table>
+</div>

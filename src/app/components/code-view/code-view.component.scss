@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+.code {
+  font-family: "Source Code Pro", serif;
+  font-optical-sizing: auto;
+  // font-weight: <weight>;
+  // font-style: normal;
+  padding: 3rem;
+}
+
+li {
+  line-height: 125%;
+  vertical-align: middle;
+}
+
+.line :hover {
+  background-color: rgb(60, 60, 60);
+}
+
+li.selected {
+  background-color: rgb(60, 60, 60);
+}
+
+li.selected::marker {
+  color: red;
+  // content: '# ';
+  // font-size: 1.2em;
+}

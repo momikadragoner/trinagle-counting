@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="flex-container">
+      <mat-slider class="slider" [disabled]="disabled" [max]="max()" [min]="min"
+        [step]="step" [discrete]="thumbLabel" [showTickMarks]="showTicks">
+        <input matSliderThumb [(value)]="value">
+      </mat-slider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="flex-container">
+      <div class="button-container">
+        <button mat-fab aria-label="Previous step" class="btn btn-left" (click)="previousStep()" [disabled]="disabled">
+          <mat-icon fontIcon="fast_rewind"></mat-icon>
+        </button>
+      </div>
+      <div class="button-container">
+        <button mat-fab class="btn btn-middle" (click)="togglePlayPause()" [disabled]="disabled">
+          @if (playing()) {
+            <mat-icon fontIcon="pause"></mat-icon>
+          } @else {
+            <mat-icon fontIcon="play_arrow"></mat-icon>
+          }
+        </button>
+      </div>
+      <div class="button-container">
+        <button mat-fab aria-label="Next step" class="btn btn-right" (click)="nextStep()" [disabled]="disabled">
+          <mat-icon fontIcon="fast_forward"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

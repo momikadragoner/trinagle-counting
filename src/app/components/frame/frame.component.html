@@ -1,13 +1,13 @@
 <div>
   <div class="row">
       <tile class="col">
-        <graph></graph>
+        <graph [matrix]="graphMatrix"></graph>
       </tile>
       <tile class="col">
-        <matrix-view></matrix-view>
+        <matrix-view [matrix]="graphMatrix"></matrix-view>
       </tile>
       <tile class="col">
-        <matrix-view></matrix-view>
+        <code-view [demo]="demo"></code-view>
       </tile>
   </div>
 </div>
