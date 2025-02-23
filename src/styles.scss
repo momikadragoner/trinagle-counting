@@ -2,16 +2,33 @@
 
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
 :root {
-  @include mat.slider-overrides((
-    active-track-color: lightblue,
-    // ripple-color: orange,
-    handle-color: lightblue,
-    // hover-state-layer-color: red,
-  ));
+  @include mat.slider-overrides((active-track-color: lightblue,
+      // ripple-color: orange,
+      handle-color: lightblue,
+      // hover-state-layer-color: red,
+    ));
+  @include mat.toolbar-overrides((container-text-color: white,
+      container-background-color: rgb(32, 32, 32),
+    ));
+  @include mat.sidenav-overrides((container-background-color: rgb(29, 29, 29),
+      container-text-color: white,
+      content-background-color: black));
+  @include mat.list-overrides((//active-indicator-color: orange,
+      list-item-container-color: rgb(32, 32, 32),
+      list-item-label-text-color: white,
+      list-item-hover-label-text-color: lightblue
+    ));
 }
 
 html, body {
+  margin: 0;
+  padding: 0;
   height: 100%;
-  background-color: black;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+app-root {
+  display: block;
+  min-height: 100%;
+  flex-direction: column;
+}

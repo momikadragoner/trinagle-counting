@@ -1,13 +1,41 @@
-<div>
-  <div class="row">
-      <tile class="col">
-        <graph [matrix]="graphMatrix"></graph>
+<mat-drawer-container class="main-container">
+  <mat-drawer #drawer mode="over">
+    <mat-nav-list>
+      <a class="nav-button" mat-list-item routerLink="/home">
+        <mat-icon>home</mat-icon> Home
+      </a>
+      <a class="nav-button" mat-list-item routerLink="/settings">
+        <mat-icon>settings</mat-icon> Settings
+      </a>
+      <mat-divider></mat-divider>
+      <a class="nav-button" mat-list-item routerLink="/logout">
+        <mat-icon>logout</mat-icon> Logout
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+  <div>
+    <div class="row">
+      <tile class="col-12">
+        <mat-toolbar>
+          <button mat-icon-button aria-label="Navigation" (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span>Triangle Counting</span>
+        </mat-toolbar>
       </tile>
-      <tile class="col">
-        <matrix-view [matrix]="graphMatrix"></matrix-view>
-      </tile>
-      <tile class="col">
-        <code-view [demo]="demo"></code-view>
-      </tile>
+    </div>
+    <div class="row">
+      <div class="col col-6 col-l-4">
+        <tile>
+          <graph [matrix]="graphMatrix"></graph>
+        </tile>
+      </div>
+        <tile class="col col-6 col-l-4">
+          <matrix-view [matrix]="graphMatrix"></matrix-view>
+        </tile>
+        <tile class="col col-12 col-l-4">
+          <code-view [demo]="demo"></code-view>
+        </tile>
+    </div>
   </div>
-</div>
+</mat-drawer-container>
