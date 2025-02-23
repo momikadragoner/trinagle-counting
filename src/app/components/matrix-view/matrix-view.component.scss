@@ -11,9 +11,11 @@ table {
   height: 100%;
 }
 
-td, th {
+td,
+th {
   position: relative;
   padding: 0;
+  transition: all .2s;
 }
 
 td :hover {
@@ -21,7 +23,13 @@ td :hover {
   background-color: rgb(60, 60, 60);
 }
 
-td .content, th .content{
+td.selected {
+  transition: all .2s;
+  background-color: rgb(60, 60, 60);
+}
+
+td .content,
+th .content {
   transition: all .2s;
   aspect-ratio: 1 / 1;
   text-align: center;

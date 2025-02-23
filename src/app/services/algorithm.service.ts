@@ -22,7 +22,7 @@ export class AlgorithmService {
         sequence.push({ lineIndex: 3, usedNodes: [v, pair[0], pair[1]], usedLinks: [] });
         if (this.containsLink(pair, graph.links)) {
           count = count + 1;
-          sequence.push({ lineIndex: 4, usedNodes: [v, pair[0], pair[1]], usedLinks: [] });
+          sequence.push({ lineIndex: 4, usedNodes: [v, pair[0], pair[1]], usedLinks: [{source: pair[0], target: pair[1]}] });
         }
       });
       sequence.push({ lineIndex: 5, usedNodes: [v], usedLinks: [] });

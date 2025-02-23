@@ -24,17 +24,17 @@
         </mat-toolbar>
       </tile>
     </div>
-    <div class="row">
+    <div class="row row-main">
       <div class="col col-6 col-l-4">
         <tile>
-          <graph [matrix]="graphMatrix"></graph>
+          <graph [matrix]="graphMatrix" [selectedNodes]="demo.snapshotSequence[currentStep].usedNodes"></graph>
         </tile>
       </div>
         <tile class="col col-6 col-l-4">
-          <matrix-view [matrix]="graphMatrix"></matrix-view>
+          <matrix-view [matrix]="graphMatrix" [selectedLinks]="demo.snapshotSequence[currentStep].usedLinks"></matrix-view>
         </tile>
         <tile class="col col-12 col-l-4">
-          <code-view [demo]="demo"></code-view>
+          <code-view [demo]="demo" [(currentStep)]="currentStep"></code-view>
         </tile>
     </div>
   </div>

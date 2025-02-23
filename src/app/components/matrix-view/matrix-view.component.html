@@ -2,7 +2,7 @@
   <table>
     <tr>
       <th></th>
-      @for (item of matrix; track $index) {
+      @for (item of matrix(); track $index) {
       <th class="col-heading">
         <div class="content">
           {{$index}}
@@ -10,7 +10,7 @@
       </th>
       }
     </tr>
-    @for (row of matrix; track $index) {
+    @for (row of matrix(); track $index; let i = $index) {
     <tr>
       <th class="row-heading">
         <div class="content">
@@ -18,8 +18,8 @@
         </div>
       </th>
 
-      @for (item of row; track $index) {
-      <td>
+      @for (item of row; track $index; let j = $index) {
+      <td [classList]="isLinkSelected(i, j) ? 'selected': ''">
         <div class="content">
           {{item}}
         </div>

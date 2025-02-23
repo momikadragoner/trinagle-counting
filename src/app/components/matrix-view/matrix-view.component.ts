@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { AdjacencyMatrix } from '../../model/adjacency-matrix';
+import { Link } from '../../model/link.model';
 
 @Component({
   selector: 'matrix-view',
@@ -8,5 +9,11 @@ import { AdjacencyMatrix } from '../../model/adjacency-matrix';
   styleUrl: './matrix-view.component.scss'
 })
 export class MatrixViewComponent {
-  @Input() matrix:number[][] = [];
+  matrix = input<number[][]>();
+  selectedLinks = input<Link[]>();
+
+  isLinkSelected(i:number, j:number): boolean {
+    return (this.selectedLinks()?.filter(x => (x.source.id == i && x.target.id == j) || (x.source.id == j && x.target.id == i)).length ?? 0) > 0;
+  }
 }
+

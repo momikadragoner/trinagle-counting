@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, input } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, input, model } from '@angular/core';
 import { MediaControlComponent } from "../media-control/media-control.component";
 import { Demo } from '../../model/demo.model';
 
@@ -11,13 +11,13 @@ import { Demo } from '../../model/demo.model';
 export class CodeViewComponent implements OnInit {
 
   demo = input<Demo>();
-  currentStep: number = 0
+  currentStep = model<number>(0);
   stepCount: number | undefined = 0
   currentLine: Number | undefined = 0
   formattedCode: String[] | undefined = [];
 
   ngOnInit(): void {
-    this.currentLine = this.demo()?.snapshotSequence[this.currentStep].lineIndex;
+    this.currentLine = this.demo()?.snapshotSequence[this.currentStep()].lineIndex;
     this.stepCount = (this.demo()?.snapshotSequence.length.valueOf() ?? 21) - 1;
 
     const keyWords = ['for', 'do', 'end', 'if', 'then', 'else', 'return'];
@@ -32,7 +32,5 @@ export class CodeViewComponent implements OnInit {
 
   stepChaneHandler(newValue: number) {
     this.currentLine = this.demo()?.snapshotSequence[newValue].lineIndex;
-    console.log(newValue);
-
   }
 }

@@ -13,7 +13,7 @@ import { Graph } from '../../model/graph.model';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'frame-component',
@@ -29,6 +29,7 @@ export class FrameComponent implements OnInit {
   graphArray: number[] = [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0];
   graphMatrix: number[][] = this.gcs.ArrayToMatrix(this.graphArray, 4);
   demo: Demo;
+  currentStep: number = 0;
 
   constructor() {
     let graph: Graph = this.gcs.MatrixToNodes(this.graphMatrix);
