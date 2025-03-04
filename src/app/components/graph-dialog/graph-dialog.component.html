@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>New Graph</h2>
+<mat-dialog-content class="content">
+  @if (currentStep == 0) {
+    <graph-form (formComplete)="nextStep($event)" @flyInOut></graph-form>
+  } @else {
+    <matrix-form  [numOfNodes]="newGraph().numOfNodes" (matrixArray)="graphComplete($event)" (previousStep)="currentStep = currentStep-1" @flyInOut></matrix-form>
+  }
+</mat-dialog-content>
+<!-- <mat-dialog-actions>
+</mat-dialog-actions> -->

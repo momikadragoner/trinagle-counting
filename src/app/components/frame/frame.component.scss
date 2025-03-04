@@ -8,7 +8,8 @@ $gutter-x: 0.75rem;
 }
 
 .nav-button {
-  margin-top: $gutter-y;
+  margin-top: calc($gutter-y * 0.5);
+  margin-bottom: calc($gutter-y * 0.5);
   margin-left: calc($gutter-x * 0.5);
   margin-right: calc($gutter-x * 0.5);
   width: calc(100% - $gutter-x);

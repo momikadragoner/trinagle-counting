@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatrixViewComponent } from '../matrix-view/matrix-view.component';
@@ -14,6 +14,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatrixFormComponent } from "../graph-dialog/matrix-form/matrix-form.component";
+import { MatDialog } from '@angular/material/dialog';
+import { GraphDialogComponent } from '../graph-dialog/graph-dialog.component';
 
 @Component({
   selector: 'frame-component',
@@ -23,9 +26,10 @@ import { MatListModule } from '@angular/material/list';
 })
 export class FrameComponent implements OnInit {
 
-  sidenavOpen = false;
-  gcs: GraphConverterService = new GraphConverterService();
-  algs: AlgorithmService = new AlgorithmService();
+  private gcs = inject(GraphConverterService);
+  private algs = inject(AlgorithmService);
+  readonly graphDialog = inject(MatDialog);
+
   graphArray: number[] = [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0];
   graphMatrix: number[][] = this.gcs.ArrayToMatrix(this.graphArray, 4);
   demo: Demo;
@@ -50,5 +54,18 @@ export class FrameComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  openGraphDialog() {
+    const dialogRef = this.graphDialog.open(GraphDialogComponent, {
+      data: { name: "My Graph", numOfNodes: 0, matrixArray: [] },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        console.log(result);
+        //TODO
+      }
+    });
   }
 }

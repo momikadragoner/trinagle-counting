@@ -1,0 +1,14 @@
+<form [formGroup]="matrixForm" (ngSubmit)="onSubmit()">
+  <div class="matrix" formArrayName="matrix">
+    @for (item of matrix.controls; track $index) {
+      <mat-checkbox id="element-{{ $index }}" [formControlName]="$index"></mat-checkbox>
+        @if (($index + 1)% numOfNodes() == 0) {
+          <br>
+        }
+    }
+  </div>
+  <div class="row">
+    <button mat-button (click)="back()">Back</button>
+    <button mat-button type="submit">Finish</button>
+  </div>
+</form>

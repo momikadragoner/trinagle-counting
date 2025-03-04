@@ -2,15 +2,18 @@
   <mat-drawer #drawer mode="over">
     <mat-nav-list>
       <a class="nav-button" mat-list-item routerLink="/home">
-        <mat-icon>home</mat-icon> Home
-      </a>
-      <a class="nav-button" mat-list-item routerLink="/settings">
-        <mat-icon>settings</mat-icon> Settings
+        <mat-icon matListItemIcon>code</mat-icon>
+        <span matListItemTitle>Start New Demo</span>
       </a>
       <mat-divider></mat-divider>
-      <a class="nav-button" mat-list-item routerLink="/logout">
-        <mat-icon>logout</mat-icon> Logout
+      <a class="nav-button" mat-list-item routerLink="/home">
+        <mat-icon matListItemIcon>schema</mat-icon>
+        <span matListItemTitle>Saved Graphs</span>
       </a>
+      <mat-list-item class="nav-button" (click)="openGraphDialog()">
+        <mat-icon matListItemIcon>add</mat-icon>
+        <span matListItemTitle>Add Graph</span>
+      </mat-list-item>
     </mat-nav-list>
   </mat-drawer>
   <div>
@@ -30,12 +33,13 @@
           <graph [matrix]="graphMatrix" [selectedNodes]="demo.snapshotSequence[currentStep].usedNodes"></graph>
         </tile>
       </div>
-        <tile class="col col-6 col-l-4">
-          <matrix-view [matrix]="graphMatrix" [selectedLinks]="demo.snapshotSequence[currentStep].usedLinks"></matrix-view>
-        </tile>
-        <tile class="col col-12 col-l-4">
-          <code-view [demo]="demo" [(currentStep)]="currentStep"></code-view>
-        </tile>
+      <tile class="col col-6 col-l-4">
+        <matrix-view [matrix]="graphMatrix"
+          [selectedLinks]="demo.snapshotSequence[currentStep].usedLinks"></matrix-view>
+      </tile>
+      <tile class="col col-12 col-l-4">
+        <code-view [demo]="demo" [(currentStep)]="currentStep"></code-view>
+      </tile>
     </div>
   </div>
 </mat-drawer-container>
