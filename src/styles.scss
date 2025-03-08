@@ -4,7 +4,7 @@
 html {
   @include mat.theme((
     color: (
-      primary: mat.$azure-palette,
+      primary: mat.$cyan-palette,
       tertiary: mat.$orange-palette,
       theme-type: dark,
     ),
@@ -19,9 +19,9 @@ html {
   //     handle-color: lightblue,
   //     // hover-state-layer-color: red,
   //   ));
-  // @include mat.toolbar-overrides((container-text-color: white,
-  //     container-background-color: rgb(32, 32, 32),
-  //   ));
+  @include mat.toolbar-overrides((container-text-color: white,
+      container-background-color: rgb(32, 32, 32),
+    ));
   // @include mat.sidenav-overrides((container-background-color: rgb(29, 29, 29),
   //     container-text-color: white,
   //     content-background-color: black));
@@ -73,4 +73,16 @@ app-root {
   display: block;
   min-height: 100%;
   flex-direction: column;
+}
+
+mat-dialog-container {
+  // transition: width 10s ease, height 10s ease, min-width 10s ease, min-height 10s ease;
+  /* Optional: Add other styles like border-radius, box-shadow, etc. */
+  // background-color: red;
+}
+
+.mat-mdc-dialog-container {
+  // transition: width 10s ease, height 10s ease, min-width 10s ease, min-height 10s ease;
+  /* Optional: Add other styles like border-radius, box-shadow, etc. */
+  // background-color: red;
 }

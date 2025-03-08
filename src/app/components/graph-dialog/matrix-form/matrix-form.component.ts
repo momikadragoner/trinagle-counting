@@ -1,7 +1,8 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, input, model, OnInit, output } from '@angular/core';
+import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { GraphDialogData } from '../graph-dialog-data.model';
 
 @Component({
   selector: 'matrix-form',
@@ -10,12 +11,15 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './matrix-form.component.scss'
 })
 export class MatrixFormComponent implements OnInit {
-  numOfNodes = input(3)
-  matrixArray = output<number[]>()
-  previousStep = output<void>()
+  newGraph = model<GraphDialogData>()
+  onFromComplete = output<void>()
+  onPreviousStep = output<void>()
 
   ngOnInit(): void {
-    let n = this.numOfNodes()
+    if (!this.newGraph()) {
+      throw new Error('Graph is undefined.');
+    }
+    let n = this.newGraph()?.numOfNodes ?? 0;
     for (let i = 0; i < n * n; i++) {
       this.addMatrixElement()
       if (Math.floor(i / n) >= i % n) {
@@ -39,12 +43,20 @@ export class MatrixFormComponent implements OnInit {
 
   onSubmit() {
     this.matrix.enable();
-    let matrixArray = (this.matrix.value as boolean[]).map(x => x ? 1 : 0);
+    let matrixArray:number[] = (this.matrix.value as boolean[]).map(x => x ? 1 : 0);
     this.matrix.disable();
-    this.matrixArray.emit(matrixArray);
+
+    this.newGraph.update( oldValue => {
+      return oldValue ? {
+        name: oldValue.name,
+        numOfNodes: oldValue.numOfNodes,
+        matrixArray: matrixArray
+      } : undefined;
+    })
+    this.onFromComplete.emit();
   }
 
-  back() {
-    this.previousStep.emit()
+  onPrevious() {
+    this.onPreviousStep.emit()
   }
 }

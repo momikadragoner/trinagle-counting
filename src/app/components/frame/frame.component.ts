@@ -58,7 +58,9 @@ export class FrameComponent implements OnInit {
 
   openGraphDialog() {
     const dialogRef = this.graphDialog.open(GraphDialogComponent, {
-      data: { name: "My Graph", numOfNodes: 0, matrixArray: [] },
+      width: '30rem',
+      height: '34rem',
+      data: { name: "My Graph", numOfNodes: 3, matrixArray: [] },
     });
 
     dialogRef.afterClosed().subscribe(result => {

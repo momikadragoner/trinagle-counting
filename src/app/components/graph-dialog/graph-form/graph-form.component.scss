@@ -1,4 +1,17 @@
 .row {
   display: flex;
+}
+.btn-row {
   justify-content: flex-end;
+}
+.input-row {
+  justify-content: center;
+}
+.bottom {
+  margin: .5rem;
+  padding: 0;
+  position: absolute;
+  bottom: .5rem;
+  left: .5rem;
+  right: .5rem;
 }

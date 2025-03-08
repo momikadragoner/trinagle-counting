@@ -19,8 +19,8 @@
       </th>
 
       @for (item of row; track $index; let j = $index) {
-      <td [classList]="isLinkSelected(i, j) ? 'selected': ''">
-        <div class="content">
+      <td [classList]="isLinkSelected(i, j) && i < j ? 'selected': ''">
+        <div class="content {{ i >= j ? 'disabled' : ''}}">
           {{item}}
         </div>
       </td>
