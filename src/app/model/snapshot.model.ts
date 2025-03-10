@@ -5,4 +5,5 @@ export interface Snapshot {
   lineIndex: Number,
   usedNodes: Node[],
   usedLinks: Link[],
+  variables: any
 }

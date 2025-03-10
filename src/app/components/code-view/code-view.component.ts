@@ -1,10 +1,11 @@
 import { Component, OnChanges, OnInit, SimpleChanges, input, model } from '@angular/core';
 import { MediaControlComponent } from "../media-control/media-control.component";
 import { Demo } from '../../model/demo.model';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'code-view',
-  imports: [MediaControlComponent],
+  imports: [MediaControlComponent, JsonPipe],
   templateUrl: './code-view.component.html',
   styleUrl: './code-view.component.scss'
 })

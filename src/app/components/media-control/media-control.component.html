@@ -1,10 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="flex-container">
-      <mat-slider class="slider" [disabled]="disabled" [max]="max()" [min]="min"
-        [step]="step" [discrete]="thumbLabel" [showTickMarks]="showTicks">
+      <mat-slider class="slider" [disabled]="disabled" [max]="max()" [min]="min" [step]="step" [discrete]="thumbLabel"
+        [showTickMarks]="showTicks">
         <input matSliderThumb [(value)]="value">
       </mat-slider>
+    </div>
+    <div class="flex-between">
+      <span class="text">{{value()}}</span>
+      <span class="text">-{{max() - value()}}</span>
     </div>
   </div>
   <div class="row">
@@ -17,9 +21,9 @@
       <div class="button-container">
         <button mat-fab class="btn btn-middle" (click)="togglePlayPause()" [disabled]="disabled">
           @if (playing()) {
-            <mat-icon fontIcon="pause"></mat-icon>
+          <mat-icon fontIcon="pause"></mat-icon>
           } @else {
-            <mat-icon fontIcon="play_arrow"></mat-icon>
+          <mat-icon fontIcon="play_arrow"></mat-icon>
           }
         </button>
       </div>

@@ -37,7 +37,8 @@ export class FrameComponent implements OnInit {
 
   constructor() {
     let graph: Graph = this.gcs.MatrixToNodes(this.graphMatrix);
-    let sequence = this.algs.DemoNodeIterator(graph);
+    let result = this.algs.DemoNodeIterator(graph);
+    let sequence = this.algs.getSnapshotSequence();
     console.log(sequence);
     this.demo = {
       algoName: "Node iteration", snapshotSequence: sequence, graph: graph, currentStepIndex: 0, pseudoCode:

@@ -21,7 +21,7 @@ export class GraphComponent implements AfterViewInit, OnChanges {
   simulation: d3.Simulation<Node, undefined> | undefined = undefined;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['selectedNodes'] != undefined) {
+    if (changes['selectedNodes'] != undefined) {
       this.simulation?.alphaTarget(0).restart();
     }
   }
@@ -65,18 +65,21 @@ export class GraphComponent implements AfterViewInit, OnChanges {
         .attr('r', 10)
         .attr("fill", "orange");
 
-        function ticked(selectedNodes:Node[] | undefined) {
-          link
-            .attr('x1', (d) => (d.source as Node).x ?? 0)
-            .attr('y1', (d) => (d.source as Node).y ?? 0)
-            .attr('x2', (d) => (d.target as Node).x ?? 0)
-            .attr('y2', (d) => (d.target as Node).y ?? 0);
+      node.append("title")
+        .text(d => d.id);
 
-          node
-            .attr('cx', (d) => d.x ?? 0)
-            .attr('cy', (d) => d.y ?? 0)
-            .attr("fill", d => color(selectedNodes?.map(x => x.id).includes(d.id) ? '0' : '1'));
-        }
+      function ticked(selectedNodes: Node[] | undefined) {
+        link
+          .attr('x1', (d) => (d.source as Node).x ?? 0)
+          .attr('y1', (d) => (d.source as Node).y ?? 0)
+          .attr('x2', (d) => (d.target as Node).x ?? 0)
+          .attr('y2', (d) => (d.target as Node).y ?? 0);
+
+        node
+          .attr('cx', (d) => d.x ?? 0)
+          .attr('cy', (d) => d.y ?? 0)
+          .attr("fill", d => color(selectedNodes?.map(x => x.id).includes(d.id) ? '0' : '1'));
+      }
 
       this.simulation.on('tick', () => ticked(this.selectedNodes()));
     });

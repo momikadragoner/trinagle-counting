@@ -3,35 +3,49 @@ import { Graph } from '../model/graph.model';
 import { Node } from '../model/node.model';
 import { Link } from '../model/link.model';
 import { Snapshot } from '../model/snapshot.model';
+import { pairs } from 'd3';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlgorithmService {
 
-  constructor() { }
+  private log: Snapshot[] = [];
 
-  public DemoNodeIterator(graph: Graph): Snapshot[] {
-    let sequence: Snapshot[] = [];
-    let count = 0;
-    sequence.push({ lineIndex: 0, usedNodes: [], usedLinks: [] });
-    sequence.push({ lineIndex: 1, usedNodes: [], usedLinks: [] });
-    graph.nodes.forEach(v => {
-      this.adjacent(v, graph).forEach(pair => {
-        sequence.push({ lineIndex: 2, usedNodes: [v], usedLinks: [] });
-        sequence.push({ lineIndex: 3, usedNodes: [v, pair[0], pair[1]], usedLinks: [] });
-        if (this.containsLink(pair, graph.links)) {
-          count = count + 1;
-          sequence.push({ lineIndex: 4, usedNodes: [v, pair[0], pair[1]], usedLinks: [{source: pair[0], target: pair[1]}] });
-        }
-      });
-      sequence.push({ lineIndex: 5, usedNodes: [v], usedLinks: [] });
-    });
-    sequence.push({ lineIndex: 6, usedNodes: [], usedLinks: [] });
-    sequence.push({ lineIndex: 7, usedNodes: [], usedLinks: [] });
-    let result: Number = count / 3;
-    sequence.push({ lineIndex: 8, usedNodes: [], usedLinks: [] });
-    return sequence;
+  clearLog() {
+    this.log = [];
+  }
+
+  getSnapshotSequence() {
+    return this.log;
+  }
+
+  private logLine(line: number, nodes: Node[], links: Link[], variables: any) {
+    this.log.push({ lineIndex: line, usedNodes: nodes, usedLinks: links, variables: variables });
+  }
+
+  public DemoNodeIterator(graph: Graph): number {
+    let count = 0; // Line 1
+    this.logLine(0, [], [], { count })
+    graph.nodes.forEach(v => { // Line 2
+      this.logLine(1, [v], [], { count, v })
+      this.adjacent(v, graph).forEach(pair => { // Line 3
+        let u = pair[0];
+        let w = pair[1];
+        this.logLine(2, [v, u, w], [], { count, v, u, w })
+        this.logLine(3, [v, u, w], [{ source: u, target: w }], { count, v, u, w })
+        if (this.containsLink(pair, graph.links)) { // Line 4
+          count = count + 1; // Line 5
+          this.logLine(4, [v, u, w], [{ source: u, target: w }], { count, v, u, w })
+        } // Line 6
+        this.logLine(5, [v], [], { count, v, pair })
+      }); // Line 7
+      this.logLine(6, [], [], { count })
+    }); // Line 8
+    this.logLine(7, [], [], { count })
+    let result: number = count / 3; // Line 9
+    this.logLine(8, [], [], { count, result })
+    return result;
   }
 
   private adjacent(v: Node, graph: Graph): [Node, Node][] {

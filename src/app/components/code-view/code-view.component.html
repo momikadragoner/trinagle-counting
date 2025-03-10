@@ -7,4 +7,7 @@
     }
   </ol>
 </div>
+<div>
+  {{ demo()?.snapshotSequence?.at(currentStep())?.variables| json }}
+</div>
 <media-control [(currentStep)]="currentStep" (currentStepChange)="stepChaneHandler($event)" [max]="stepCount ?? 20"></media-control>
