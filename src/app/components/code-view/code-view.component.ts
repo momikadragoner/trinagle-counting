@@ -9,7 +9,7 @@ import { JsonPipe } from '@angular/common';
   templateUrl: './code-view.component.html',
   styleUrl: './code-view.component.scss'
 })
-export class CodeViewComponent implements OnInit {
+export class CodeViewComponent implements OnInit, OnChanges {
 
   demo = input<Demo>();
   currentStep = model<number>(0);
@@ -24,14 +24,16 @@ export class CodeViewComponent implements OnInit {
     const keyWords = ['for', 'do', 'end', 'if', 'then', 'else', 'return'];
     let code = this.demo()?.pseudoCode;
 
-
     keyWords.forEach(w => {
       code = code?.replaceAll(w, '<b>' + w + '</b>');
     })
     this.formattedCode = code?.split('\n');
   }
 
-  stepChaneHandler(newValue: number) {
-    this.currentLine = this.demo()?.snapshotSequence[newValue].lineIndex;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["currentStep"]) {
+      let newValue = changes["currentStep"].currentValue
+      this.currentLine = this.demo()?.snapshotSequence[newValue].lineIndex;
+    }
   }
 }

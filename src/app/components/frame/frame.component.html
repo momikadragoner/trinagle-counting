@@ -42,4 +42,5 @@
       </tile>
     </div>
   </div>
+  <media-control class="controls" [(currentStep)]="currentStep" (currentStepChange)="stepChangeHandler($event)" [max]="demo.snapshotSequence.length - 1"></media-control>
 </mat-drawer-container>

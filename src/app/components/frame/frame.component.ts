@@ -17,10 +17,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatrixFormComponent } from "../graph-dialog/matrix-form/matrix-form.component";
 import { MatDialog } from '@angular/material/dialog';
 import { GraphDialogComponent } from '../graph-dialog/graph-dialog.component';
+import { MediaControlComponent } from "../media-control/media-control.component";
 
 @Component({
   selector: 'frame-component',
-  imports: [MatButtonModule, MatGridListModule, MatrixViewComponent, TileComponent, GraphComponent, CodeViewComponent, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule],
+  imports: [MatButtonModule, MatGridListModule, MatrixViewComponent, TileComponent, GraphComponent, CodeViewComponent, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MediaControlComponent],
   templateUrl: './frame.component.html',
   styleUrl: './frame.component.scss'
 })
@@ -70,5 +71,9 @@ export class FrameComponent implements OnInit {
         //TODO
       }
     });
+  }
+
+  stepChangeHandler(newValue: number) {
+    //TODO
   }
 }

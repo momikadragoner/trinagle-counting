@@ -20,7 +20,7 @@ import { color } from 'd3';
 
 @Component({
   selector: 'app-graph-dialog',
-  imports: [MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle, MatButtonModule, MatrixFormComponent, GraphFormComponent],
+  imports: [MatDialogContent, MatDialogTitle, MatButtonModule, MatrixFormComponent, GraphFormComponent],
   templateUrl: './graph-dialog.component.html',
   styleUrl: './graph-dialog.component.scss'
 })

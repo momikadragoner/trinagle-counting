@@ -48,6 +48,14 @@ $gutter-x: 0.75rem;
   min-height: 30vh;
 }
 
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: fit-content;
+  min-width: 30rem;
+}
+
 @media (min-width: 950px) {
   .col-l-4 {
     flex: 0 0 auto;
