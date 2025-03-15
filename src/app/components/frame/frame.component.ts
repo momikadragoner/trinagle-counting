@@ -6,20 +6,18 @@ import { TileComponent } from '../tile/tile.component';
 import { GraphComponent } from "../graph/graph.component";
 import { GraphConverterService } from '../../services/graph-converter.service';
 import { CodeViewComponent } from '../code-view/code-view.component';
-import { AlgorithmService } from '../../services/algorithm.service';
-import { Snapshot } from '../../model/snapshot.model';
 import { Demo } from '../../model/demo.model';
 import { Graph } from '../../model/graph.model';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { MatrixFormComponent } from "../graph-dialog/matrix-form/matrix-form.component";
 import { MatDialog } from '@angular/material/dialog';
 import { GraphDialogComponent } from '../graph-dialog/graph-dialog.component';
 import { MediaControlComponent } from "../media-control/media-control.component";
-import { ObjectConverterService } from '../../services/object-converter.service';
 import { VariableViewComponent } from "../variable-view/variable-view.component";
+import { DemoBuilderService } from '../../services/demo-builder.service';
+import { AlgoType } from '../../model/algo-type.model';
 
 @Component({
   selector: 'frame-component',
@@ -30,30 +28,20 @@ import { VariableViewComponent } from "../variable-view/variable-view.component"
 export class FrameComponent implements OnInit {
 
   private gcs = inject(GraphConverterService);
-  private algs = inject(AlgorithmService);
+  private demoBuilder = inject(DemoBuilderService);
   readonly graphDialog = inject(MatDialog);
 
   graphArray: number[] = [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0];
   graphMatrix: number[][] = this.gcs.ArrayToMatrix(this.graphArray, 4);
-  demo: Demo;
   currentStep: number = 0;
+  demo: Demo;
 
   constructor() {
     let graph: Graph = this.gcs.MatrixToNodes(this.graphMatrix);
-    let result = this.algs.DemoNodeIterator(graph);
-    let sequence = this.algs.getSnapshotSequence();
-    console.log(sequence);
-    this.demo = {
-      algoName: "Node iteration", snapshotSequence: sequence, graph: graph, currentStepIndex: 0, pseudoCode:
-        `count = 0
-      for each node v ∈ V do
-        for each pair of distinct neighbor u and w in adj(v) do
-          if (u, w) ∈ E then
-            count = count + 1
-          end if
-        end for
-      end for
-      return count/3 `}
+    this.demo = this.demoBuilder
+    .setAlgorithm(AlgoType.Node)
+    .setGraph(graph)
+    .build();
   }
 
   ngOnInit(): void {
@@ -73,9 +61,5 @@ export class FrameComponent implements OnInit {
         //TODO
       }
     });
-  }
-
-  stepChangeHandler(newValue: number) {
-    //TODO
   }
 }

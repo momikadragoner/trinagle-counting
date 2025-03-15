@@ -10,21 +10,22 @@ import { pairs } from 'd3';
 })
 export class AlgorithmService {
 
-  private log: Snapshot[] = [];
+  private sequence: Snapshot[] = [];
 
-  clearLog() {
-    this.log = [];
+  private clearSequence(): void {
+    this.sequence = [];
   }
 
-  getSnapshotSequence() {
-    return this.log;
+  public getSnapshotSequence(): Snapshot[] {
+    return this.sequence;
   }
 
   private logLine(line: number, nodes: Node[], links: Link[], variables: any) {
-    this.log.push({ lineIndex: line, usedNodes: nodes, usedLinks: links, variables: variables });
+    this.sequence.push({ lineIndex: line, usedNodes: nodes, usedLinks: links, variables: variables });
   }
 
-  public DemoNodeIterator(graph: Graph): number {
+  public NodeIteratorTrinagleCount(graph: Graph): number {
+    this.clearSequence();
     let count = 0; // Line 1
     this.logLine(0, [], [], { count })
     graph.nodes.forEach(v => { // Line 2
@@ -50,7 +51,9 @@ export class AlgorithmService {
 
   private adjacent(v: Node, graph: Graph): [Node, Node][] {
     let pairs: [Node, Node][] = [];
-    let neighbours = graph.links.filter(l => l.source == v || l.target == v).map(l => l.source == v ? l.target : l.source);
+    let neighbours = graph.links
+      .filter(l => l.source == v || l.target == v)
+      .map(l => l.source == v ? l.target : l.source);
     for (let i = 0; i < neighbours.length; i++) {
       const fst = neighbours[i];
       for (let j = i + 1; j < neighbours.length; j++) {

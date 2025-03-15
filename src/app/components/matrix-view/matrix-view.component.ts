@@ -1,5 +1,4 @@
 import { Component, input, Input } from '@angular/core';
-import { AdjacencyMatrix } from '../../model/adjacency-matrix';
 import { Link } from '../../model/link.model';
 
 @Component({
