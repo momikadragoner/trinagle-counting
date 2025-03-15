@@ -2,6 +2,7 @@ $gutter-y: 0.75rem;
 $gutter-x: 0.75rem;
 
 .main-container {
+  position: relative;
   display: flex;
   flex: 1;
   height: 100vh;
@@ -27,10 +28,21 @@ $gutter-x: 0.75rem;
   flex-shrink: 0;
   padding-right: calc($gutter-x * 0.5);
   padding-left: calc($gutter-x * 0.5);
-  margin-top: $gutter-y;
+  // margin-top: $gutter-y;
 }
 
 .col {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  justify-items: stretch;
+}
+
+.tile {
+  // flex: 1;
+  margin-top: $gutter-y;
+  // margin-bottom: $gutter-y;
   height: 100%;
 }
 
@@ -49,7 +61,7 @@ $gutter-x: 0.75rem;
 }
 
 .controls {
-  position: absolute;
+  position: sticky;
   bottom: 0;
   left: 0;
   width: fit-content;
@@ -63,5 +75,8 @@ $gutter-x: 0.75rem;
   }
   .row-main {
     height: 85vh;
+  }
+  .controls {
+    position: absolute;
   }
 }

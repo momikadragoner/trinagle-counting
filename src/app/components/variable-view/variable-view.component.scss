@@ -1,0 +1,27 @@
+.variables {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+table {
+  margin: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tr {
+  transition: background-color .2s;
+}
+
+tr:hover {
+  transition: background-color .2s;
+  background-color: rgb(60, 60, 60);
+}
+
+.even {
+  background-color: rgb(45, 45, 45);
+}
+
+td {
+  padding-left: 2rem;
+}

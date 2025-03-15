@@ -38,7 +38,7 @@ export class AlgorithmService {
           count = count + 1; // Line 5
           this.logLine(4, [v, u, w], [{ source: u, target: w }], { count, v, u, w })
         } // Line 6
-        this.logLine(5, [v], [], { count, v, pair })
+        this.logLine(5, [v], [], { count, v, u, w })
       }); // Line 7
       this.logLine(6, [], [], { count })
     }); // Line 8

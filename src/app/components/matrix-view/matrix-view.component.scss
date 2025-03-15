@@ -15,22 +15,22 @@ td,
 th {
   position: relative;
   padding: 0;
-  transition: all .2s;
+  transition: background-color .2s;
 }
 
 td :hover {
-  transition: all .2s;
+  transition: background-color .2s;
   background-color: rgb(60, 60, 60);
 }
 
 td.selected {
-  transition: all .2s;
+  transition: background-color .2s;
   background-color: rgb(60, 60, 60);
 }
 
 td .content,
 th .content {
-  transition: all .2s;
+  transition: background-color .2s;
   aspect-ratio: 1 / 1;
   text-align: center;
   display: flex;

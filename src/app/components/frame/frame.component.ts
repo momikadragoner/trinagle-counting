@@ -18,10 +18,12 @@ import { MatrixFormComponent } from "../graph-dialog/matrix-form/matrix-form.com
 import { MatDialog } from '@angular/material/dialog';
 import { GraphDialogComponent } from '../graph-dialog/graph-dialog.component';
 import { MediaControlComponent } from "../media-control/media-control.component";
+import { ObjectConverterService } from '../../services/object-converter.service';
+import { VariableViewComponent } from "../variable-view/variable-view.component";
 
 @Component({
   selector: 'frame-component',
-  imports: [MatButtonModule, MatGridListModule, MatrixViewComponent, TileComponent, GraphComponent, CodeViewComponent, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MediaControlComponent],
+  imports: [MatButtonModule, MatGridListModule, MatrixViewComponent, TileComponent, GraphComponent, CodeViewComponent, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MediaControlComponent, VariableViewComponent],
   templateUrl: './frame.component.html',
   styleUrl: './frame.component.scss'
 })

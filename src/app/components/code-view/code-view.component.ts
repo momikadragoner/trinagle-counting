@@ -1,20 +1,17 @@
 import { Component, OnChanges, OnInit, SimpleChanges, input, model } from '@angular/core';
-import { MediaControlComponent } from "../media-control/media-control.component";
 import { Demo } from '../../model/demo.model';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'code-view',
-  imports: [MediaControlComponent, JsonPipe],
+  imports: [],
   templateUrl: './code-view.component.html',
   styleUrl: './code-view.component.scss'
 })
 export class CodeViewComponent implements OnInit, OnChanges {
-
   demo = input<Demo>();
   currentStep = model<number>(0);
-  stepCount: number | undefined = 0
-  currentLine: Number | undefined = 0
+  stepCount: number | undefined = 0;
+  currentLine: Number | undefined = 0;
   formattedCode: String[] | undefined = [];
 
   ngOnInit(): void {
@@ -32,7 +29,7 @@ export class CodeViewComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["currentStep"]) {
-      let newValue = changes["currentStep"].currentValue
+      let newValue = changes["currentStep"].currentValue;
       this.currentLine = this.demo()?.snapshotSequence[newValue].lineIndex;
     }
   }

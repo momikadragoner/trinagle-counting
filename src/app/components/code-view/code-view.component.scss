@@ -8,15 +8,18 @@
 }
 
 li {
+  transition: background-color .2s;
   line-height: 125%;
   vertical-align: middle;
 }
 
 .line :hover {
+  transition: background-color .2s;
   background-color: rgb(60, 60, 60);
 }
 
 li.selected {
+  transition: background-color .2s;
   background-color: rgb(60, 60, 60);
 }
 
@@ -24,13 +27,4 @@ li.selected::marker {
   color: orange;
   // content: '# ';
   // font-size: 1.2em;
-}
-
-.variables {
-  border-radius: 2rem;
-  border-color: #101414;
-  border-width: .4rem;
-  border-style: solid;
-  margin: 1rem;
-  padding: 1rem;
 }
