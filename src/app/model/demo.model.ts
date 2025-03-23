@@ -3,9 +3,10 @@ import { Graph } from "./graph.model";
 import { Snapshot } from "./snapshot.model";
 
 export interface Demo {
-  graph: Graph,
-  algoName: String,
+  algoName: string,
   algoType: AlgoType,
+  graph: Graph,
+  adjMatrix: number[][],
   pseudoCode: String,
   snapshotSequence: Snapshot[]
 }

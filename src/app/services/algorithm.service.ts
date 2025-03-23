@@ -30,7 +30,7 @@ export class AlgorithmService {
     this.logLine(0, [], [], { count })
     graph.nodes.forEach(v => { // Line 2
       this.logLine(1, [v], [], { count, v })
-      this.adjacent(v, graph).forEach(pair => { // Line 3
+      this.adjacentPairs(v, graph).forEach(pair => { // Line 3
         let u = pair[0];
         let w = pair[1];
         this.logLine(2, [v, u, w], [], { count, v, u, w })
@@ -49,7 +49,76 @@ export class AlgorithmService {
     return result;
   }
 
-  private adjacent(v: Node, graph: Graph): [Node, Node][] {
+  public EdgeIteratorTrinagleCount(graph: Graph): number {
+    this.clearSequence()
+    let count = 0;
+    this.logLine(0, [], [], {count});
+    graph.links.forEach( edge => {
+      let u = edge.source;
+      let v = edge.target;
+      this.logLine(1, [u, v], [edge], {count, u, v});
+      let adj1 = this.adjacent(edge.source, graph);
+      this.logLine(2, [u, v], [edge], {count, u, v, adj1});
+      let adj2 = this.adjacent(edge.target, graph);
+      this.logLine(3, [u, v], [edge], {count, u, v, adj1, adj2});
+      let counte = adj1.filter(value => adj2.includes(value)).length;
+      this.logLine(4, [u, v], [edge], {count, u, v, adj1, adj2, counte});
+      count += counte;
+      this.logLine(5, [u, v], [edge], {count, u, v, adj1, adj2, counte});
+
+    })
+    this.logLine(6, [], [], {count});
+    let result = count;
+    this.logLine(6, [], [], {count, result});
+    return count;
+  }
+
+  public MatrixMultiplicationTriangleCount(adjMatrix:number[][]): number {
+    this.clearSequence()
+    let A = adjMatrix;
+    let n = adjMatrix.length;
+    let count = 0;
+    this.logLine(0, [], [], {A, count});
+    let A2 = this.matrixCubed(adjMatrix);
+    this.logLine(1, [], [], {A, count, A2});
+    for (let i = 0; i < n; i++) {
+      this.logLine(2, [], [], {A, count, A2, i, n});
+      for (let j = 0; j < n; j++) {
+        this.logLine(3, [], [], {A, count, A2, i, n, j});
+        count = count + A[i][j] * A2[i][j];
+        this.logLine(4, [], [], {A, count, A2, i, n, j});
+      }
+      this.logLine(5, [], [], {A, count, A2, i, n });
+    }
+    this.logLine(6, [], [], {A, count, A2});
+    let result = count/3;
+    this.logLine(7, [], [], {A, count, A2, result});
+    return result;
+  }
+
+  private matrixCubed(matrix:number[][]): number[][] {
+    let resultMatrix: number[][] = [];
+    for (let i = 0; i < matrix.length; i++) {
+      resultMatrix.push([]);
+      for (let j = 0; j < matrix.length; j++) {
+        let sum = 0;
+        for (let k = 0; k < matrix.length; k++) {
+          sum += matrix[i][k] * matrix[k][j];
+        }
+        resultMatrix[i].push(sum);
+      }
+    }
+    return resultMatrix;
+  }
+
+  private adjacent(x: Node, graph: Graph): Node[] {
+    return graph.links
+    .filter(l => l.source == x || l.target == x)
+    .map(l => l.source == x ? l.target : l.source)
+    .filter(n => n.id > x.id);
+  }
+
+  private adjacentPairs(v: Node, graph: Graph): [Node, Node][] {
     let pairs: [Node, Node][] = [];
     let neighbours = graph.links
       .filter(l => l.source == v || l.target == v)

@@ -2,7 +2,7 @@
   <table>
   @for (item of variables; track $index) {
       <tr [classList]="$index % 2 == 0 ? 'even' : 'uneven'">
-        <td>
+        <td class="key">
           {{item.key}}
         </td>
         <td>

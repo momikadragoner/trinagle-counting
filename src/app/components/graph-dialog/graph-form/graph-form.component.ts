@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { GraphDialogData } from '../graph-dialog-data.model';
+import { GraphData } from '../../../model/graph-data.model';
 
 @Component({
   selector: 'graph-form',
@@ -20,7 +20,7 @@ export class GraphFormComponent implements OnInit{
 
   private formBuilder = inject(FormBuilder);
   onFormComplete = output<void>();
-  newGraph = model<GraphDialogData>();
+  newGraph = model<GraphData>();
   graphForm = this.formBuilder.group({
     name: this.formBuilder.control('My Graph', Validators.required),
     numOfNodes: this.formBuilder.control(0, [Validators.required, Validators.min(3), Validators.max(20)])

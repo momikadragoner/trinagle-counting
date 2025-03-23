@@ -15,6 +15,20 @@ export class CodeViewComponent implements OnInit, OnChanges {
   formattedCode: String[] | undefined = [];
 
   ngOnInit(): void {
+    this.initialize();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["currentStep"]) {
+      let newValue = changes["currentStep"].currentValue;
+      this.currentLine = this.demo()?.snapshotSequence[newValue].lineIndex;
+    }
+    if (changes["demo"]) {
+      this.initialize();
+    }
+  }
+
+  initialize() {
     this.currentLine = this.demo()?.snapshotSequence[this.currentStep()].lineIndex;
     this.stepCount = (this.demo()?.snapshotSequence.length.valueOf() ?? 21) - 1;
 
@@ -25,12 +39,5 @@ export class CodeViewComponent implements OnInit, OnChanges {
       code = code?.replaceAll(w, '<b>' + w + '</b>');
     })
     this.formattedCode = code?.split('\n');
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes["currentStep"]) {
-      let newValue = changes["currentStep"].currentValue;
-      this.currentLine = this.demo()?.snapshotSequence[newValue].lineIndex;
-    }
   }
 }

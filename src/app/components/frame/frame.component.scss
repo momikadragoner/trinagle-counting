@@ -28,7 +28,6 @@ $gutter-x: 0.75rem;
   flex-shrink: 0;
   padding-right: calc($gutter-x * 0.5);
   padding-left: calc($gutter-x * 0.5);
-  // margin-top: $gutter-y;
 }
 
 .col {
@@ -40,9 +39,7 @@ $gutter-x: 0.75rem;
 }
 
 .tile {
-  // flex: 1;
   margin-top: $gutter-y;
-  // margin-bottom: $gutter-y;
   height: 100%;
 }
 

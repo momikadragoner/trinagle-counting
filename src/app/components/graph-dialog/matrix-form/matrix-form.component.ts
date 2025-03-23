@@ -2,18 +2,22 @@ import { Component, inject, input, model, OnInit, output } from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { GraphDialogData } from '../graph-dialog-data.model';
+import { GraphData } from '../../../model/graph-data.model';
+import { GraphComponent } from "../../graph/graph.component";
+import { GraphConverterService } from '../../../services/graph-converter.service';
 
 @Component({
   selector: 'matrix-form',
-  imports: [ReactiveFormsModule, MatCheckboxModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatCheckboxModule, MatButtonModule, GraphComponent],
   templateUrl: './matrix-form.component.html',
   styleUrl: './matrix-form.component.scss'
 })
 export class MatrixFormComponent implements OnInit {
-  newGraph = model<GraphDialogData>()
+  newGraph = model<GraphData>()
   onFromComplete = output<void>()
   onPreviousStep = output<void>()
+
+  gcs: GraphConverterService = inject(GraphConverterService);
 
   ngOnInit(): void {
     if (!this.newGraph()) {
@@ -41,12 +45,17 @@ export class MatrixFormComponent implements OnInit {
     this.matrix.push(this.formBuilder.control(false));
   }
 
+  getGraph() {
+    let matrixArray: number[] = (this.matrix.value as boolean[]).map(x => x ? 1 : 0);
+    return this.gcs.ArrayToNodes(matrixArray, this.newGraph()?.numOfNodes ?? 0);
+  }
+
   onSubmit() {
     this.matrix.enable();
-    let matrixArray:number[] = (this.matrix.value as boolean[]).map(x => x ? 1 : 0);
+    let matrixArray: number[] = (this.matrix.value as boolean[]).map(x => x ? 1 : 0);
     this.matrix.disable();
 
-    this.newGraph.update( oldValue => {
+    this.newGraph.update(oldValue => {
       return oldValue ? {
         name: oldValue.name,
         numOfNodes: oldValue.numOfNodes,

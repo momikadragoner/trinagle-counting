@@ -9,8 +9,6 @@ import { Graph } from '../model/graph.model';
 })
 export class GraphConverterService {
 
-  constructor() { }
-
   public MatrixToNodes(matrix: number[][]): Graph {
     const nodes: Node[] = [];
     const links: Link[] = [];
@@ -34,4 +32,21 @@ export class GraphConverterService {
     }
     return matrix;
   }
+
+  public ArrayToNodes(array: number[], n: number): Graph {
+    return this.MatrixToNodes(this.ArrayToMatrix(array, n));
+  }
+
+  public NodesToMatrix(graph: Graph): number[][] {
+    let n = graph.nodes.length;
+    let matrix: number[][] = []
+    for (let i = 0; i < n; i++) {
+      matrix.push([])
+      for (let j = 0; j < n; j++) {
+        matrix[i].push(graph.links.filter(l => l.source.id == i && l.target.id == j).length > 0 ? 1 : 0);
+      }
+    }
+    return matrix;
+  }
+
 }

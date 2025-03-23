@@ -14,7 +14,7 @@ import { MatrixFormComponent } from "./matrix-form/matrix-form.component";
 import { GraphFormComponent } from './graph-form/graph-form.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { GraphDialogData } from './graph-dialog-data.model';
+import { GraphData } from '../../model/graph-data.model';
 import { color } from 'd3';
 
 
@@ -26,7 +26,7 @@ import { color } from 'd3';
 })
 export class GraphDialogComponent {
   readonly dialogRef = inject(MatDialogRef<GraphDialogComponent>);
-  readonly data = inject<GraphDialogData>(MAT_DIALOG_DATA);
+  readonly data = inject<GraphData>(MAT_DIALOG_DATA);
   readonly newGraph = model(this.data);
 
   currentContent = 0

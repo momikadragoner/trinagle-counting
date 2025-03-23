@@ -1,15 +1,19 @@
 <mat-drawer-container class="main-container">
-  <mat-drawer #drawer mode="over">
+  <mat-drawer #drawer mode="over" [(opened)]="drawerOpened">
     <mat-nav-list>
       <a class="nav-button" mat-list-item routerLink="/home">
-        <mat-icon matListItemIcon>code</mat-icon>
+        <mat-icon matListItemIcon>data_object</mat-icon>
         <span matListItemTitle>Start New Demo</span>
       </a>
       <mat-divider></mat-divider>
-      <a class="nav-button" mat-list-item routerLink="/home">
+      <mat-list-item class="nav-button" (click)="openAlgoDialog()">
+        <mat-icon matListItemIcon>code</mat-icon>
+        <span matListItemTitle>Select Algorithm</span>
+      </mat-list-item>
+      <mat-list-item class="nav-button" (click)="openSelectGraphDialog()">
         <mat-icon matListItemIcon>schema</mat-icon>
-        <span matListItemTitle>Saved Graphs</span>
-      </a>
+        <span matListItemTitle>Select Graph</span>
+      </mat-list-item>
       <mat-list-item class="nav-button" (click)="openGraphDialog()">
         <mat-icon matListItemIcon>add</mat-icon>
         <span matListItemTitle>Add Graph</span>
@@ -30,7 +34,7 @@
     <div class="row row-main">
       <div class="col col-6 col-l-4">
         <tile class="tile">
-          <graph [matrix]="graphMatrix" [selectedNodes]="demo.snapshotSequence[currentStep].usedNodes"></graph>
+          <graph [graph]="graph" [selectedNodes]="demo.snapshotSequence[currentStep].usedNodes"></graph>
         </tile>
       </div>
       <div class="col col-6 col-l-4">
@@ -49,5 +53,5 @@
       </div>
     </div>
   </div>
-  <media-control class="controls" [(currentStep)]="currentStep" [max]="demo.snapshotSequence.length - 1"></media-control>
+  <media-control class="controls" [title]="demo.algoName" [(currentStep)]="currentStep" [max]="demo.snapshotSequence.length - 1"></media-control>
 </mat-drawer-container>
