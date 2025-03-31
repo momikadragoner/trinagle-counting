@@ -46,8 +46,8 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     this.simulation = d3
       .forceSimulation(nodes)
-      .force('link', d3.forceLink(links).id((d: d3.SimulationNodeDatum) => d.index ?? '').distance(50))
-      .force('collide', d3.forceCollide().radius(5))
+      .force('link', d3.forceLink(links).id((d: d3.SimulationNodeDatum) => d.index ?? '').distance(75))
+      .force('collide', d3.forceCollide().radius(8))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(this.width / 2, this.height / 2)).alphaDecay(0.0228).alphaMin(0.001);
 

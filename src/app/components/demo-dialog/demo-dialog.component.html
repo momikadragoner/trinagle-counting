@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>New Demo</h2>
+<mat-dialog-content>
+  <div class="row">
+    <form [formGroup]="demoForm">
+      <div class="col">
+        <label>Select Algorithm</label>
+        <mat-selection-list #algoList [formControl]="algoControl" name="algo" [multiple]="false">
+          @for (option of algoOptoins; track option) {
+          <mat-list-option [value]="option.value">{{option.name}}</mat-list-option>
+          }
+        </mat-selection-list>
+      </div>
+      <div class="col">
+        <label>Select Graph</label>
+        <mat-selection-list #graphList [formControl]="graphControl" name="graph" [multiple]="false">
+          @for (graph of graphs; track $index) {
+          <mat-list-option [value]="graph">{{graph.name}} ({{graph.numOfNodes}} vertices)</mat-list-option>
+          }
+        </mat-selection-list>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="close()" cdkFocusInitial>Begin</button>
+</mat-dialog-actions>

@@ -23,7 +23,6 @@ export class AlgorithmDialogComponent {
   ]
 
   onNoClick(): void {
-    AlgoType
     this.dialogRef.close();
   }
 }

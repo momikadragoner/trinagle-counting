@@ -19,8 +19,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SelectGraphDialogComponent {
   readonly dialogRef = inject(MatDialogRef<SelectGraphDialogComponent>);
   readonly data = inject<GraphData>(MAT_DIALOG_DATA);
+  readonly graph = model(this.data);
   private snackBar = inject(MatSnackBar);
-  readonly algo = model(this.data);
   private cookieService = inject(CookieService);
 
   get graphs() {

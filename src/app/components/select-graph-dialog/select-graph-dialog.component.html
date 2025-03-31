@@ -2,7 +2,7 @@
 <mat-dialog-content>
   <label id="radio-group-label">Pick from your saved Graphs</label>
   <mat-list>
-    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="algo">
+    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="graph">
       @for (item of graphs; track $index) {
       <mat-list-item class="list-item">
         <mat-radio-button [value]="item" class="radio-button">{{item.name}}</mat-radio-button>
@@ -24,5 +24,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="algo()" cdkFocusInitial>Select</button>
+  <button mat-button [mat-dialog-close]="graph()" cdkFocusInitial>Select</button>
 </mat-dialog-actions>

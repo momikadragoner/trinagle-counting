@@ -1,18 +1,18 @@
 <mat-drawer-container class="main-container">
   <mat-drawer #drawer mode="over" [(opened)]="drawerOpened">
     <mat-nav-list>
-      <a class="nav-button" mat-list-item routerLink="/home">
+      <mat-list-item class="nav-button" (click)="openDemoDialog()">
         <mat-icon matListItemIcon>data_object</mat-icon>
         <span matListItemTitle>Start New Demo</span>
-      </a>
+      </mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item class="nav-button" (click)="openAlgoDialog()">
         <mat-icon matListItemIcon>code</mat-icon>
-        <span matListItemTitle>Select Algorithm</span>
+        <span matListItemTitle>Change Algorithm</span>
       </mat-list-item>
       <mat-list-item class="nav-button" (click)="openSelectGraphDialog()">
         <mat-icon matListItemIcon>schema</mat-icon>
-        <span matListItemTitle>Select Graph</span>
+        <span matListItemTitle>My Graphs</span>
       </mat-list-item>
       <mat-list-item class="nav-button" (click)="openGraphDialog()">
         <mat-icon matListItemIcon>add</mat-icon>

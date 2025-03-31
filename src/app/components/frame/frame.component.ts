@@ -24,6 +24,7 @@ import { AlgorithmDialogComponent } from '../algorithm-dialog/algorithm-dialog.c
 import { CookieService } from '../../services/cookie.service';
 import { SelectGraphDialogComponent } from '../select-graph-dialog/select-graph-dialog.component';
 import { GraphData } from '../../model/graph-data.model';
+import { DemoDialogComponent } from '../demo-dialog/demo-dialog.component';
 
 @Component({
   selector: 'frame-component',
@@ -37,7 +38,7 @@ export class FrameComponent implements OnInit {
   private demoBuilder = inject(DemoBuilderService);
   private cookieService = inject(CookieService);
   private snackBar = inject(MatSnackBar);
-  readonly graphDialog = inject(MatDialog);
+  readonly dialog = inject(MatDialog);
 
   graphData: GraphData;
   graphArray: number[] = [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -61,28 +62,29 @@ export class FrameComponent implements OnInit {
 
   }
 
-  algoChanged(algo: AlgoType) {
-    this.algo = algo;
+  rebuildDemo(algo: AlgoType, newGraphData:GraphData) {
     this.currentStep = 0;
+    this.algo = algo;
+    this.graphData = newGraphData;
+    let graph: Graph = this.converter.ArrayToNodes(newGraphData.matrixArray, newGraphData.numOfNodes);
+    this.graph = graph;
+    this.graphMatrix = this.converter.ArrayToMatrix(newGraphData.matrixArray, newGraphData.numOfNodes);
     this.demo = this.demoBuilder
-      .setAlgorithm(algo)
-      .setGraph(this.graph)
-      .build();
+    .setAlgorithm(algo)
+    .setGraph(graph)
+    .build();
+  }
+
+  algoChanged(algo: AlgoType) {
+    this.rebuildDemo(algo, this.graphData)
   }
 
   graphChanged(newGraphData:GraphData) {
-    let graph: Graph = this.converter.ArrayToNodes(newGraphData.matrixArray, newGraphData.numOfNodes);
-    this.graph = graph;
-    this.graphData = newGraphData;
-    this.currentStep = 0;
-    this.demo = this.demoBuilder
-      .setAlgorithm(this.algo)
-      .setGraph(graph)
-      .build();
+    this.rebuildDemo(this.algo, newGraphData);
   }
 
   openGraphDialog() {
-    const dialogRef = this.graphDialog.open(GraphDialogComponent, {
+    const dialogRef = this.dialog.open(GraphDialogComponent, {
       width: '30rem',
       height: '34rem',
       data: { name: "My Graph", numOfNodes: 3, matrixArray: [] },
@@ -98,18 +100,20 @@ export class FrameComponent implements OnInit {
             this.openSnackBar(error.message, 'Dismiss')
           }
         }
-        this.graphChanged(result)
+        this.graphChanged(result);
       }
     });
   }
 
   openAlgoDialog() {
-    const dialogRef = this.graphDialog.open(AlgorithmDialogComponent, {
+    const dialogRef = this.dialog.open(AlgorithmDialogComponent, {
       data: this.algo,
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && result !== null) {
+        console.log(result);
+
         this.drawerOpened = false;
         this.algoChanged(result);
       }
@@ -117,13 +121,26 @@ export class FrameComponent implements OnInit {
   }
 
   openSelectGraphDialog() {
-    const dialogRef = this.graphDialog.open(SelectGraphDialogComponent, {
+    const dialogRef = this.dialog.open(SelectGraphDialogComponent, {
       data: this.graphData,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && result !== null) {
         this.drawerOpened = false;
-        this.graphChanged(result)
+        this.graphChanged(result);
+      }
+    });
+  }
+
+  openDemoDialog() {
+    const dialogRef = this.dialog.open(DemoDialogComponent, {
+      data: {graphData: this.graphData, algoType: this.algo}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined && result !== null) {
+        this.drawerOpened = false;
+        console.log(result);
+        this.rebuildDemo(result.algoType, result.graphData);
       }
     });
   }
