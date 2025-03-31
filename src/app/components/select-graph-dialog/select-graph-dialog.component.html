@@ -1,13 +1,26 @@
 <h2 mat-dialog-title>Select Graph</h2>
 <mat-dialog-content>
   <label id="radio-group-label">Pick from your saved Graphs</label>
-  <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="algo">
-    @for (item of graphs; track $index) {
-      <mat-radio-button [value]="item" class="radio-button">{{item.name}}</mat-radio-button>
-    } @empty {
+  <mat-list>
+    <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" [(ngModel)]="algo">
+      @for (item of graphs; track $index) {
+      <mat-list-item class="list-item">
+        <mat-radio-button [value]="item" class="radio-button">{{item.name}}</mat-radio-button>
+        <button matListItemMeta mat-icon-button class="del-btn" [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="deleteGraph(item.name)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </mat-list-item>
+      } @empty {
       <p>No saved Graphs. Try adding one first.</p>
-    }
-  </mat-radio-group>
+      }
+    </mat-radio-group>
+  </mat-list>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>

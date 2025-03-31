@@ -14,6 +14,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { GraphDialogComponent } from '../graph-dialog/graph-dialog.component';
 import { MediaControlComponent } from "../media-control/media-control.component";
 import { VariableViewComponent } from "../variable-view/variable-view.component";
@@ -22,6 +23,7 @@ import { AlgoType } from '../../model/algo-type.model';
 import { AlgorithmDialogComponent } from '../algorithm-dialog/algorithm-dialog.component';
 import { CookieService } from '../../services/cookie.service';
 import { SelectGraphDialogComponent } from '../select-graph-dialog/select-graph-dialog.component';
+import { GraphData } from '../../model/graph-data.model';
 
 @Component({
   selector: 'frame-component',
@@ -34,8 +36,10 @@ export class FrameComponent implements OnInit {
   private converter = inject(GraphConverterService);
   private demoBuilder = inject(DemoBuilderService);
   private cookieService = inject(CookieService);
+  private snackBar = inject(MatSnackBar);
   readonly graphDialog = inject(MatDialog);
 
+  graphData: GraphData;
   graphArray: number[] = [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0];
   graphMatrix: number[][] = this.converter.ArrayToMatrix(this.graphArray, 4);
   graph: Graph = this.converter.MatrixToNodes(this.graphMatrix);
@@ -46,6 +50,7 @@ export class FrameComponent implements OnInit {
 
   constructor() {
     let graph: Graph = this.converter.MatrixToNodes(this.graphMatrix);
+    this.graphData = {name:"Example Graph", numOfNodes: 4, matrixArray: this.graphArray};
     this.demo = this.demoBuilder
       .setAlgorithm(this.algo)
       .setGraph(graph)
@@ -65,9 +70,10 @@ export class FrameComponent implements OnInit {
       .build();
   }
 
-  graphChanged(graphArray: number[], numOfNodes: number) {
-    let graph: Graph = this.converter.ArrayToNodes(graphArray, numOfNodes);
+  graphChanged(newGraphData:GraphData) {
+    let graph: Graph = this.converter.ArrayToNodes(newGraphData.matrixArray, newGraphData.numOfNodes);
     this.graph = graph;
+    this.graphData = newGraphData;
     this.currentStep = 0;
     this.demo = this.demoBuilder
       .setAlgorithm(this.algo)
@@ -83,11 +89,16 @@ export class FrameComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result !== undefined && result !== null) {
         this.drawerOpened = false;
-        this.cookieService.saveGraph(result);
-        this.graphChanged(result.matrixArray, result.numOfNodes)
-        //TODO
+        try {
+          this.cookieService.saveGraph(result);
+        } catch (error) {
+          if ( error instanceof Error) {
+            this.openSnackBar(error.message, 'Dismiss')
+          }
+        }
+        this.graphChanged(result)
       }
     });
   }
@@ -98,7 +109,7 @@ export class FrameComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result !== undefined && result !== null) {
         this.drawerOpened = false;
         this.algoChanged(result);
       }
@@ -106,12 +117,18 @@ export class FrameComponent implements OnInit {
   }
 
   openSelectGraphDialog() {
-    const dialogRef = this.graphDialog.open(SelectGraphDialogComponent);
+    const dialogRef = this.graphDialog.open(SelectGraphDialogComponent, {
+      data: this.graphData,
+    });
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
+      if (result !== undefined && result !== null) {
         this.drawerOpened = false;
-        this.graphChanged(result.matrixArray, result.numOfNodes)
+        this.graphChanged(result)
       }
     });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action);
   }
 }
