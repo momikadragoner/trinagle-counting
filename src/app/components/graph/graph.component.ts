@@ -71,7 +71,7 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
       .enter()
       .append('circle')
       .attr('r', 10)
-      .attr("fill", this.color("1"))
+      .attr("fill", this.color("0"))
       .call(d3.drag<SVGCircleElement, Node>()
         .on('start', (event: any, d: any) => {
           if (!event.active) this.simulation?.alphaTarget(0.3).restart();
@@ -96,54 +96,6 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.ticked();
       });
     });
-  }
-
-  private updateGraph(): void {
-    if (!this.simulation || !this.svg) {
-      return;
-    }
-
-    const newNodes = this.graph().nodes;
-    const newLinks = this.graph().links;
-
-    this.node = this.svg.select('g').selectAll('circle')
-      .data(newNodes, (d: any) => d.uuid)
-      .join(
-        enter => enter.append('circle')
-          .attr('r', 10)
-          .attr("fill", this.color("1"))
-          .call(d3.drag<SVGCircleElement, Node>()
-            .on('start', (event: any, d: any) => {
-              if (!event.active) this.simulation?.alphaTarget(0.3).restart();
-              d.fx = d.x;
-              d.fy = d.y;
-            })
-            .on("drag", (event: any, d: any) => {
-              d.fx = event.x;
-              d.fy = event.y;
-            })
-            .on("end", (event: any, d: any) => {
-              if (!event.active) this.simulation?.alphaTarget(0);
-              d.fx = null;
-              d.fy = null;
-            }))
-          .append("title")
-          .text(d => d.id),
-        update => update,
-        exit => exit.remove()
-      );
-
-    this.link = this.svg.select('g').selectAll('line')
-      .data(newLinks, (d: any) => `${d.source.uuid}-${d.target.uuid}`)
-      .join(
-        enter => enter.append('line').attr('stroke', 'gray').attr('stroke-width', 2),
-        update => update,
-        exit => exit.remove()
-      );
-
-    this.simulation.nodes(newNodes);
-    (this.simulation.force('link') as d3.ForceLink<Node, Link>).links(newLinks);
-    this.simulation.alpha(1).restart();
   }
 
   private updateNodeColors(): void {

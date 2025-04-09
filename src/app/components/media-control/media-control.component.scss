@@ -2,11 +2,22 @@
   margin: 0;
   margin-left: 1rem;
   margin-right: 1rem;
-  padding: 2rem;
+  padding-top: .75rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
   box-shadow: .5rem .5rem 1rem black;
   border-top-right-radius: 2rem;
   border-top-left-radius: 2rem;
   background-color: #101414;
+}
+
+.mat-toolbar-row {
+  padding: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
 
 .flex-container {

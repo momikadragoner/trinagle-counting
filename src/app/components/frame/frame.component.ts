@@ -139,7 +139,6 @@ export class FrameComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && result !== null) {
         this.drawerOpened = false;
-        console.log(result);
         this.rebuildDemo(result.algoType, result.graphData);
       }
     });

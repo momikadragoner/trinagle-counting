@@ -2,10 +2,12 @@ import { Component, input, model } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'media-control',
-  imports: [MatIconModule, MatButtonModule, MatSliderModule],
+  imports: [MatIconModule, MatButtonModule, MatSliderModule, MatMenuModule, MatToolbarModule],
   templateUrl: './media-control.component.html',
   styleUrl: './media-control.component.scss'
 })
@@ -19,6 +21,7 @@ export class MediaControlComponent {
   max = input(20);
   min = 0;
   step = 1;
+  tickSpeed = 500;
 
   nextStep() {
     this.value.update(oldValue => {
@@ -43,7 +46,7 @@ export class MediaControlComponent {
     while (this.playing()) {
       if (this.value() < this.max()) {
         this.value.update(x => x + 1);
-        await this.wait(500);
+        await this.wait(this.tickSpeed);
       } else {
         this.playing.set(false);
       }

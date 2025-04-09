@@ -1,8 +1,24 @@
 <div class="container">
   <div class="row">
-    <span>
+    <mat-toolbar-row>
       {{title()}}
-    </span>
+      <span class="spacer"></span>
+      <button mat-icon-button class="" [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="playbackspeed">
+          <span>Playback Speed</span>
+        </button>
+      </mat-menu>
+      <mat-menu #playbackspeed="matMenu">
+        <button mat-menu-item (click)="tickSpeed = 2000">0.25</button>
+        <button mat-menu-item (click)="tickSpeed = 1000">0.5</button>
+        <button mat-menu-item (click)="tickSpeed = 500">Normal</button>
+        <button mat-menu-item (click)="tickSpeed = 333">1.5</button>
+        <button mat-menu-item (click)="tickSpeed = 250">2</button>
+      </mat-menu>
+    </mat-toolbar-row>
   </div>
   <div class="row">
     <div class="flex-container">
