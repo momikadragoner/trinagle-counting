@@ -27,7 +27,7 @@ export class GraphFormComponent implements OnInit {
   newGraph = model<GraphData>();
   graphForm = this.formBuilder.group({
     name: this.formBuilder.control('My Graph', Validators.required),
-    numOfNodes: this.formBuilder.control(0, [Validators.required, Validators.min(3), Validators.max(20)])
+    numOfNodes: this.formBuilder.control(0, [Validators.required, Validators.min(3), Validators.max(10)])
   });
 
   onSubmit() {

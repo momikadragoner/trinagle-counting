@@ -69,7 +69,7 @@ export class AlgorithmService {
     })
     this.logLine(6, [], [], {count});
     let result = count;
-    this.logLine(6, [], [], {count, result});
+    this.logLine(7, [], [], {count, result});
     return count;
   }
 
@@ -84,14 +84,14 @@ export class AlgorithmService {
     for (let i = 0; i < n; i++) {
       this.logLine(2, [], [], {A, count, A2, i, n});
       for (let j = 0; j < n; j++) {
-        this.logLine(3, [], [], {A, count, A2, i, n, j});
+        this.logLine(3, [{id:i}, {id:j}], [{source:{id:i}, target:{id:j}}], {A, count, A2, i, n, j});
         count = count + A[i][j] * A2[i][j];
-        this.logLine(4, [], [], {A, count, A2, i, n, j});
+        this.logLine(4, [{id:i}, {id:j}], [{source:{id:i}, target:{id:j}}], {A, count, A2, i, n, j});
       }
       this.logLine(5, [], [], {A, count, A2, i, n });
     }
     this.logLine(6, [], [], {A, count, A2});
-    let result = count/3;
+    let result = count;
     this.logLine(7, [], [], {A, count, A2, result});
     return result;
   }

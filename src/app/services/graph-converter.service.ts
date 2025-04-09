@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Link } from '../model/link.model';
 import { Node } from '../model/node.model';
 import { Graph } from '../model/graph.model';
-
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class GraphConverterService {
     const nodes: Node[] = [];
     const links: Link[] = [];
     for (let i = 0; i < matrix.length; i++) {
-      nodes.push({ id: i });
+      nodes.push({ id: i, uuid: uuidv4() });
     }
     for (let i = 0; i < matrix.length; i++) {
       const row = matrix[i];

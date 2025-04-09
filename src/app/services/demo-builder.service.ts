@@ -56,7 +56,7 @@ export class DemoBuilderService {
           count = count + A[i,j] · (A^2)[i,j]
           end for
           end for
-          return count/3`
+          return count`
         break;
       default:
         break;
