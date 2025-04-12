@@ -4,6 +4,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
         <input formControlName="name" id="name" matInput>
+        <mat-hint>Must be unique</mat-hint>
       </mat-form-field>
     </p>
   </div>
@@ -11,6 +12,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Number of Nodes</mat-label>
       <input formControlName="numOfNodes" id="numOfNodes" matInput type="number">
+      <mat-hint>Number between 3 and 10</mat-hint>
     </mat-form-field>
   </div>
   <div class="bottom">

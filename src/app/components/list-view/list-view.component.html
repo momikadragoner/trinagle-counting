@@ -1,0 +1,26 @@
+<div class="container">
+  <table>
+    @for (row of list(); track $index; let i = $index) {
+      <tr>
+        @for (row of list(); track $index; let i = $index) {
+          <td></td>
+        }
+      </tr>
+    <tr>
+      <th class="row-heading">
+        <div class="content">
+          {{$index}}
+        </div>
+      </th>
+
+      @for (item of row; track $index; let j = $index) {
+      <td [classList]="isLinkSelected(i, item) ? 'selected': ''">
+        <div class="content">
+          {{item}}
+        </div>
+      </td>
+      }
+    </tr>
+    }
+  </table>
+</div>

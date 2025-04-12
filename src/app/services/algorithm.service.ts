@@ -4,6 +4,7 @@ import { Node } from '../model/node.model';
 import { Link } from '../model/link.model';
 import { Snapshot } from '../model/snapshot.model';
 import { pairs } from 'd3';
+import { identity } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -49,54 +50,65 @@ export class AlgorithmService {
     return result;
   }
 
-  public EdgeIteratorTrinagleCount(graph: Graph): number {
+  public EdgeIteratorTrinagleCount(list: number[][]): number {
     this.clearSequence()
     let count = 0;
-    this.logLine(0, [], [], {count});
-    graph.links.forEach( edge => {
-      let u = edge.source;
-      let v = edge.target;
-      this.logLine(1, [u, v], [edge], {count, u, v});
-      let adj1 = this.adjacent(edge.source, graph);
-      this.logLine(2, [u, v], [edge], {count, u, v, adj1});
-      let adj2 = this.adjacent(edge.target, graph);
-      this.logLine(3, [u, v], [edge], {count, u, v, adj1, adj2});
-      let counte = adj1.filter(value => adj2.includes(value)).length;
-      this.logLine(4, [u, v], [edge], {count, u, v, adj1, adj2, counte});
-      count += counte;
-      this.logLine(5, [u, v], [edge], {count, u, v, adj1, adj2, counte});
-
-    })
-    this.logLine(6, [], [], {count});
+    this.logLine(0, [], [], { count });
+    for (let i = 0; i < list.length; i++) {
+      for (let j = 0; j < list[i].length; j++) {
+        const source = i;
+        const target = list[i][j];
+        if (source > target) continue;
+        let u = { id: source };
+        let v = { id: target };
+        this.logLine(1, [u, v], [], { count, u, v });
+        let adj1 = this.adjacent(u, list);
+        let edgeList1 = this.listToEdge(u.id, adj1);
+        this.logLine(2, [u, v], edgeList1, { count, u, v, adj1 });
+        let adj2 = this.adjacent(v, list);
+        let edgeList2 = this.listToEdge(v.id, adj2);
+        this.logLine(3, [u, v], edgeList2, { count, u, v, adj1, adj2 });
+        let common_neighbors = adj1.filter(value => adj2.includes(value));
+        let common_list: Link[] = [];
+        common_neighbors.forEach(item => {
+          common_list.push({ target: { id: item }, source: { id: target } });
+          common_list.push({ target: { id: item }, source: { id: source } });
+        })
+        this.logLine(4, [u, v], common_list, { count, u, v, adj1, adj2, common_neighbors });
+        count += common_neighbors.length;
+        this.logLine(5, [u, v], [], { count, u, v, adj1, adj2, common_neighbors });
+      }
+    }
+    this.logLine(6, [], [], { count });
     let result = count;
-    this.logLine(7, [], [], {count, result});
+    this.logLine(7, [], [], { count, result });
     return count;
   }
 
-  public MatrixMultiplicationTriangleCount(adjMatrix:number[][]): number {
+  public MatrixMultiplicationTriangleCount(adjMatrix: number[][]): number {
     this.clearSequence()
     let A = adjMatrix;
     let n = adjMatrix.length;
     let count = 0;
-    this.logLine(0, [], [], {A, count});
+    this.logLine(0, [], [], { A, count });
     let A2 = this.matrixCubed(adjMatrix);
-    this.logLine(1, [], [], {A, count, A2});
+    this.logLine(1, [], [], { A, count, A2 });
     for (let i = 0; i < n; i++) {
-      this.logLine(2, [], [], {A, count, A2, i, n});
+      this.logLine(2, [], [], { A, count, A2, i, n });
       for (let j = 0; j < n; j++) {
-        this.logLine(3, [{id:i}, {id:j}], [{source:{id:i}, target:{id:j}}], {A, count, A2, i, n, j});
+        this.logLine(3, [{ id: i }, { id: j }], [{ source: { id: i }, target: { id: j } }], { A, count, A2, i, n, j });
         count = count + A[i][j] * A2[i][j];
-        this.logLine(4, [{id:i}, {id:j}], [{source:{id:i}, target:{id:j}}], {A, count, A2, i, n, j});
+        this.logLine(4, [{ id: i }, { id: j }], [{ source: { id: i }, target: { id: j } }], { A, count, A2, i, n, j });
       }
-      this.logLine(5, [], [], {A, count, A2, i, n });
+      this.logLine(5, [], [], { A, count, A2, i, n });
     }
-    this.logLine(6, [], [], {A, count, A2});
+    this.logLine(6, [], [], { A, count, A2 });
     let result = count;
-    this.logLine(7, [], [], {A, count, A2, result});
+    this.logLine(7, [], [], { A, count, A2, result });
     return result;
   }
 
-  private matrixCubed(matrix:number[][]): number[][] {
+  private matrixCubed(matrix: number[][]): number[][] {
     let resultMatrix: number[][] = [];
     for (let i = 0; i < matrix.length; i++) {
       resultMatrix.push([]);
@@ -111,11 +123,12 @@ export class AlgorithmService {
     return resultMatrix;
   }
 
-  private adjacent(x: Node, graph: Graph): Node[] {
-    return graph.links
-    .filter(l => l.source == x || l.target == x)
-    .map(l => l.source == x ? l.target : l.source)
-    .filter(n => n.id > x.id);
+  private adjacent(node: Node, list: number[][]): number[] {
+    return list[node.id].filter(x => x > node.id);
+  }
+
+  private listToEdge(source: number, targetList: number[]): Link[] {
+    return targetList.map(x => { return { source: { id: source }, target: { id: x } }; });
   }
 
   private adjacentPairs(v: Node, graph: Graph): [Node, Node][] {

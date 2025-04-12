@@ -14,7 +14,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { GraphDialogComponent } from '../graph-dialog/graph-dialog.component';
 import { MediaControlComponent } from "../media-control/media-control.component";
 import { VariableViewComponent } from "../variable-view/variable-view.component";
@@ -25,14 +25,15 @@ import { CookieService } from '../../services/cookie.service';
 import { SelectGraphDialogComponent } from '../select-graph-dialog/select-graph-dialog.component';
 import { GraphData } from '../../model/graph-data.model';
 import { DemoDialogComponent } from '../demo-dialog/demo-dialog.component';
+import { ListViewComponent } from "../list-view/list-view.component";
 
 @Component({
   selector: 'frame-component',
-  imports: [MatButtonModule, MatGridListModule, MatrixViewComponent, TileComponent, GraphComponent, CodeViewComponent, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MediaControlComponent, VariableViewComponent, MatSelectModule],
+  imports: [MatButtonModule, MatGridListModule, MatrixViewComponent, TileComponent, GraphComponent, CodeViewComponent, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MediaControlComponent, VariableViewComponent, MatSelectModule, ListViewComponent],
   templateUrl: './frame.component.html',
   styleUrl: './frame.component.scss'
 })
-export class FrameComponent implements OnInit {
+export class FrameComponent {
 
   private converter = inject(GraphConverterService);
   private demoBuilder = inject(DemoBuilderService);
@@ -43,6 +44,7 @@ export class FrameComponent implements OnInit {
   graphData: GraphData;
   graphArray: number[] = [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0];
   graphMatrix: number[][] = this.converter.ArrayToMatrix(this.graphArray, 4);
+  graphList: number[][] = this.converter.MatrixToList(this.graphMatrix);
   graph: Graph = this.converter.MatrixToNodes(this.graphMatrix);
   algo: AlgoType = AlgoType.Node;
   currentStep: number = 0;
@@ -51,36 +53,37 @@ export class FrameComponent implements OnInit {
 
   constructor() {
     let graph: Graph = this.converter.MatrixToNodes(this.graphMatrix);
-    this.graphData = {name:"Example Graph", numOfNodes: 4, matrixArray: this.graphArray};
+    this.graphData = { name: "Example Graph", numOfNodes: 4, matrixArray: this.graphArray };
     this.demo = this.demoBuilder
       .setAlgorithm(this.algo)
       .setGraph(graph)
       .build();
   }
 
-  ngOnInit(): void {
-
-  }
-
-  rebuildDemo(algo: AlgoType, newGraphData:GraphData) {
+  rebuildDemo(algo: AlgoType, newGraphData: GraphData): void {
     this.currentStep = 0;
     this.algo = algo;
     this.graphData = newGraphData;
     let graph: Graph = this.converter.ArrayToNodes(newGraphData.matrixArray, newGraphData.numOfNodes);
     this.graph = graph;
     this.graphMatrix = this.converter.ArrayToMatrix(newGraphData.matrixArray, newGraphData.numOfNodes);
+    this.graphList = this.converter.MatrixToList(this.graphMatrix);
     this.demo = this.demoBuilder
-    .setAlgorithm(algo)
-    .setGraph(graph)
-    .build();
+      .setAlgorithm(algo)
+      .setGraph(graph)
+      .build();
   }
 
-  algoChanged(algo: AlgoType) {
+  algoChanged(algo: AlgoType): void {
     this.rebuildDemo(algo, this.graphData)
   }
 
-  graphChanged(newGraphData:GraphData) {
+  graphChanged(newGraphData: GraphData): void {
     this.rebuildDemo(this.algo, newGraphData);
+  }
+
+  isAlgoEdge(): boolean {
+    return this.algo == AlgoType.Link;
   }
 
   openGraphDialog() {
@@ -96,7 +99,7 @@ export class FrameComponent implements OnInit {
         try {
           this.cookieService.saveGraph(result);
         } catch (error) {
-          if ( error instanceof Error) {
+          if (error instanceof Error) {
             this.openSnackBar(error.message, 'Dismiss')
           }
         }
@@ -112,8 +115,6 @@ export class FrameComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && result !== null) {
-        console.log(result);
-
         this.drawerOpened = false;
         this.algoChanged(result);
       }
@@ -134,7 +135,7 @@ export class FrameComponent implements OnInit {
 
   openDemoDialog() {
     const dialogRef = this.dialog.open(DemoDialogComponent, {
-      data: {graphData: this.graphData, algoType: this.algo}
+      data: { graphData: this.graphData, algoType: this.algo }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && result !== null) {

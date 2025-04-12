@@ -68,6 +68,17 @@ export class DemoDialogComponent implements OnInit {
       ]
     },
     {
+      name: 'Grid', numOfNodes: 7, matrixArray: [
+        0, 1, 1, 1, 1, 1, 0,
+        0, 0, 1, 0, 0, 1, 1,
+        0, 0, 0, 1, 0, 0, 0,
+        0, 0, 0, 0, 1, 0, 0,
+        0, 0, 0, 0, 0, 1, 0,
+        0, 0, 0, 0, 0, 0, 1,
+        0, 0, 0, 0, 0, 0, 0,
+      ]
+    },
+    {
       name: 'Euglena viridis', numOfNodes: 5, matrixArray: [
         0, 1, 1, 1, 0,
         0, 0, 1, 1, 0,

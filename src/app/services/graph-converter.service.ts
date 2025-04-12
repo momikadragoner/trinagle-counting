@@ -25,6 +25,24 @@ export class GraphConverterService {
     return { nodes: nodes, links: links };
   }
 
+  public MatrixToList(matrix: number[][]): number[][] {
+    const list:number[][] = [];
+    for (let i = 0; i < matrix.length; i++) {
+      list.push([]);
+    }
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        const element = matrix[i][j];
+        if (element == 1) {
+          list[i].push(j);
+          list[j].push(i);
+        }
+      }
+      list[i].sort();
+    }
+    return list;
+  }
+
   public ArrayToMatrix(array: number[], n: number): number[][] {
     const matrix: number[][] = [];
     for (let index = 0; index < n * n; index += n) {

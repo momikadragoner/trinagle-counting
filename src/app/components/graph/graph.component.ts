@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, input, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, input, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { Link } from '../../model/link.model';
 import { Node } from '../../model/node.model';
@@ -12,10 +12,8 @@ import { Graph } from '../../model/graph.model';
   styleUrl: './graph.component.scss'
 })
 export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
-  constructor(private ngZone: NgZone) { }
 
-  gcs: GraphConverterService = new GraphConverterService();
-
+  private ngZone = inject(NgZone);
   graph = input<Graph>({ nodes: [], links: [] });
   selectedNodes = input<Node[]>();
 
@@ -38,6 +36,10 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    const element = document.getElementById('full-width-container');
+    if (element) {
+      this.width = element.offsetWidth;
+    }
     this.initializeSimulation(this.graph().nodes, this.graph().links);
   }
 
@@ -50,8 +52,8 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     this.simulation = d3
       .forceSimulation(nodes)
-      .force('link', d3.forceLink(links).id((d: d3.SimulationNodeDatum) => d.index ?? '').distance(75))
-      .force('collide', d3.forceCollide().radius(8))
+      .force('link', d3.forceLink(links).id((d: d3.SimulationNodeDatum) => d.index ?? '').distance(50))
+      .force('collide', d3.forceCollide())
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(this.width / 2, this.height / 2)).alphaDecay(0.0228).alphaMin(0.001);
 

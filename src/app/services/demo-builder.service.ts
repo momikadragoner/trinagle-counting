@@ -42,8 +42,8 @@ export class DemoBuilderService {
           for each edge (u, v) ∈ E do
           adj1 = {x|x ∈ adj(u), x > u}
           adj2 = {x|x ∈ adj(v), x > v}
-          counte = |intersection(adj1, adj2)|
-          count+ = counte
+          common_neighbors = intersection(adj1, adj2)
+          count += |common_neighbors|
           end for
           return count`;
         break;
@@ -76,7 +76,7 @@ export class DemoBuilderService {
         this.algs.NodeIteratorTrinagleCount(this.demo.graph);
         break;
       case AlgoType.Link:
-        this.algs.EdgeIteratorTrinagleCount(this.demo.graph);
+        this.algs.EdgeIteratorTrinagleCount(this.converter.MatrixToList(this.demo.adjMatrix));
         break;
       case AlgoType.Matrix:
         this.algs.MatrixMultiplicationTriangleCount(this.demo.adjMatrix);

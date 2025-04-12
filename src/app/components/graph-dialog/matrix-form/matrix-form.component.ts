@@ -8,7 +8,7 @@ import { GraphConverterService } from '../../../services/graph-converter.service
 
 @Component({
   selector: 'matrix-form',
-  imports: [ReactiveFormsModule, MatCheckboxModule, MatButtonModule, GraphComponent],
+  imports: [ReactiveFormsModule, MatCheckboxModule, MatButtonModule],
   templateUrl: './matrix-form.component.html',
   styleUrl: './matrix-form.component.scss'
 })
