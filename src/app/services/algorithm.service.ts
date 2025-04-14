@@ -21,11 +21,11 @@ export class AlgorithmService {
     return this.sequence;
   }
 
-  private logLine(line: number, nodes: Node[], links: Link[], variables: any) {
+  private logLine(line: number, nodes: Node[], links: Link[], variables: any): void {
     this.sequence.push({ lineIndex: line, usedNodes: nodes, usedLinks: links, variables: variables });
   }
 
-  public NodeIteratorTrinagleCount(graph: Graph): number {
+  public nodeIteratorTrinagleCount(graph: Graph): number {
     this.clearSequence();
     let count = 0; // Line 1
     this.logLine(0, [], [], { count })
@@ -50,7 +50,7 @@ export class AlgorithmService {
     return result;
   }
 
-  public EdgeIteratorTrinagleCount(list: number[][]): number {
+  public edgeIteratorTrinagleCount(list: number[][]): number {
     this.clearSequence()
     let count = 0;
     this.logLine(0, [], [], { count });
@@ -85,7 +85,7 @@ export class AlgorithmService {
     return count;
   }
 
-  public MatrixMultiplicationTriangleCount(adjMatrix: number[][]): number {
+  public matrixMultiplicationTriangleCount(adjMatrix: number[][]): number {
     this.clearSequence()
     let A = adjMatrix;
     let n = adjMatrix.length;

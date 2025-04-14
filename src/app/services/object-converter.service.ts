@@ -6,20 +6,21 @@ import { Node as Nodee } from '../model/node.model';
 })
 export class ObjectConverterService {
 
-  objectToArray(variableObject: object): any[] {
+  public objectToArray(variableObject: any): any[] {
+    if (!variableObject) {
+      return [];
+    }
     let keys = Object.keys(variableObject);
     let values = Object.values(variableObject);
     let array = []
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-
       array.push({ key: key, value: this.simplifyNodes(values[i]) });
-
     }
     return array;
   }
 
-  simplifyNodes(value: any): any {
+  private simplifyNodes(value: any): any {
     if (typeof value === 'object' && 'id' in value) {
       return { id: value.id };
     }

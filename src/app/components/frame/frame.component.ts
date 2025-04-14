@@ -43,16 +43,16 @@ export class FrameComponent {
 
   graphData: GraphData;
   graphArray: number[] = [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0];
-  graphMatrix: number[][] = this.converter.ArrayToMatrix(this.graphArray, 4);
-  graphList: number[][] = this.converter.MatrixToList(this.graphMatrix);
-  graph: Graph = this.converter.MatrixToNodes(this.graphMatrix);
+  graphMatrix: number[][] = this.converter.arrayToMatrix(this.graphArray, 4);
+  graphList: number[][] = this.converter.matrixToList(this.graphMatrix);
+  graph: Graph = this.converter.matrixToNodes(this.graphMatrix);
   algo: AlgoType = AlgoType.Node;
   currentStep: number = 0;
   demo: Demo;
   drawerOpened: boolean = false;
 
   constructor() {
-    let graph: Graph = this.converter.MatrixToNodes(this.graphMatrix);
+    let graph: Graph = this.converter.matrixToNodes(this.graphMatrix);
     this.graphData = { name: "Example Graph", numOfNodes: 4, matrixArray: this.graphArray };
     this.demo = this.demoBuilder
       .setAlgorithm(this.algo)
@@ -64,10 +64,10 @@ export class FrameComponent {
     this.currentStep = 0;
     this.algo = algo;
     this.graphData = newGraphData;
-    let graph: Graph = this.converter.ArrayToNodes(newGraphData.matrixArray, newGraphData.numOfNodes);
+    let graph: Graph = this.converter.arrayToNodes(newGraphData.matrixArray, newGraphData.numOfNodes);
     this.graph = graph;
-    this.graphMatrix = this.converter.ArrayToMatrix(newGraphData.matrixArray, newGraphData.numOfNodes);
-    this.graphList = this.converter.MatrixToList(this.graphMatrix);
+    this.graphMatrix = this.converter.arrayToMatrix(newGraphData.matrixArray, newGraphData.numOfNodes);
+    this.graphList = this.converter.matrixToList(this.graphMatrix);
     this.demo = this.demoBuilder
       .setAlgorithm(algo)
       .setGraph(graph)

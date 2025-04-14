@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VariableViewComponent } from './variable-view.component';
+import { JsonPipe } from '@angular/common';
+import { ObjectConverterService } from '../../services/object-converter.service';
 
 describe('VariableViewComponent', () => {
   let component: VariableViewComponent;

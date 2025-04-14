@@ -58,7 +58,7 @@ export class CookieService {
     return document.cookie.split(";").some((item) => item.trim().startsWith(cookieName + "="));
   }
 
-  private setCookie(name: string, value: object) {
+  private setCookie(name: string, value: object): void {
     document.cookie = name + "=" + JSON.stringify(value);
   }
 

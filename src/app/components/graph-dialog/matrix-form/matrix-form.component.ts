@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { GraphData } from '../../../model/graph-data.model';
+import { Graph } from '../../../model/graph.model';
 import { GraphComponent } from "../../graph/graph.component";
 import { GraphConverterService } from '../../../services/graph-converter.service';
 
@@ -21,7 +22,7 @@ export class MatrixFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.newGraph()) {
-      throw new Error('Graph is undefined.');
+      return;
     }
     let n = this.newGraph()?.numOfNodes ?? 0;
     for (let i = 0; i < n * n; i++) {
@@ -47,7 +48,7 @@ export class MatrixFormComponent implements OnInit {
 
   getGraph() {
     let matrixArray: number[] = (this.matrix.value as boolean[]).map(x => x ? 1 : 0);
-    return this.gcs.ArrayToNodes(matrixArray, this.newGraph()?.numOfNodes ?? 0);
+    return this.gcs.arrayToNodes(matrixArray, this.newGraph()?.numOfNodes ?? 0);
   }
 
   onSubmit() {

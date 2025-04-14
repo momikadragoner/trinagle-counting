@@ -66,20 +66,20 @@ export class DemoBuilderService {
 
   public setGraph(graph: Graph): DemoBuilderService {
     this.demo.graph = graph
-    this.demo.adjMatrix = this.converter.NodesToMatrix(graph);
+    this.demo.adjMatrix = this.converter.nodesToMatrix(graph);
     return this;
   }
 
   public build(): Demo {
     switch (this.demo.algoType) {
       case AlgoType.Node:
-        this.algs.NodeIteratorTrinagleCount(this.demo.graph);
+        this.algs.nodeIteratorTrinagleCount(this.demo.graph);
         break;
       case AlgoType.Link:
-        this.algs.EdgeIteratorTrinagleCount(this.converter.MatrixToList(this.demo.adjMatrix));
+        this.algs.edgeIteratorTrinagleCount(this.converter.matrixToList(this.demo.adjMatrix));
         break;
       case AlgoType.Matrix:
-        this.algs.MatrixMultiplicationTriangleCount(this.demo.adjMatrix);
+        this.algs.matrixMultiplicationTriangleCount(this.demo.adjMatrix);
         break;
       default:
         break;

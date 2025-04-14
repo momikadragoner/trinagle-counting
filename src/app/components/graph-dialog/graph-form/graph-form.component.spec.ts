@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GraphFormComponent } from './graph-form.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GraphFormComponent', () => {
   let component: GraphFormComponent;
@@ -8,7 +9,7 @@ describe('GraphFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GraphFormComponent]
+      imports: [GraphFormComponent, NoopAnimationsModule]
     })
     .compileComponents();
 

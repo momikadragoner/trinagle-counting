@@ -2,18 +2,17 @@ import { Injectable } from '@angular/core';
 import { Link } from '../model/link.model';
 import { Node } from '../model/node.model';
 import { Graph } from '../model/graph.model';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GraphConverterService {
 
-  public MatrixToNodes(matrix: number[][]): Graph {
+  public matrixToNodes(matrix: number[][]): Graph {
     const nodes: Node[] = [];
     const links: Link[] = [];
     for (let i = 0; i < matrix.length; i++) {
-      nodes.push({ id: i, uuid: uuidv4() });
+      nodes.push({ id: i });
     }
     for (let i = 0; i < matrix.length; i++) {
       const row = matrix[i];
@@ -25,7 +24,7 @@ export class GraphConverterService {
     return { nodes: nodes, links: links };
   }
 
-  public MatrixToList(matrix: number[][]): number[][] {
+  public matrixToList(matrix: number[][]): number[][] {
     const list:number[][] = [];
     for (let i = 0; i < matrix.length; i++) {
       list.push([]);
@@ -43,7 +42,7 @@ export class GraphConverterService {
     return list;
   }
 
-  public ArrayToMatrix(array: number[], n: number): number[][] {
+  public arrayToMatrix(array: number[], n: number): number[][] {
     const matrix: number[][] = [];
     for (let index = 0; index < n * n; index += n) {
       matrix.push(array.slice(index, index + n))
@@ -51,11 +50,11 @@ export class GraphConverterService {
     return matrix;
   }
 
-  public ArrayToNodes(array: number[], n: number): Graph {
-    return this.MatrixToNodes(this.ArrayToMatrix(array, n));
+  public arrayToNodes(array: number[], n: number): Graph {
+    return this.matrixToNodes(this.arrayToMatrix(array, n));
   }
 
-  public NodesToMatrix(graph: Graph): number[][] {
+  public nodesToMatrix(graph: Graph): number[][] {
     let n = graph.nodes.length;
     let matrix: number[][] = []
     for (let i = 0; i < n; i++) {
@@ -65,6 +64,10 @@ export class GraphConverterService {
       }
     }
     return matrix;
+  }
+
+  public arrayToList(array:number[], n: number): number[][] {
+    return this.matrixToList(this.arrayToMatrix(array, n));
   }
 
 }
