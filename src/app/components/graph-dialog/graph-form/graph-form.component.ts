@@ -15,11 +15,6 @@ import { CookieService } from '../../../services/cookie.service';
   styleUrl: './graph-form.component.scss'
 })
 export class GraphFormComponent implements OnInit {
-  ngOnInit(): void {
-    this.graphForm.controls.name.setValue(this.newGraph()?.name ?? 'My Graph')
-    this.graphForm.controls.numOfNodes.setValue(this.newGraph()?.numOfNodes ?? 3)
-  }
-
   private formBuilder = inject(FormBuilder);
   private cookieService = inject(CookieService);
   private snackBar = inject(MatSnackBar);
@@ -29,6 +24,11 @@ export class GraphFormComponent implements OnInit {
     name: this.formBuilder.control('My Graph', Validators.required),
     numOfNodes: this.formBuilder.control(0, [Validators.required, Validators.min(3), Validators.max(10)])
   });
+
+  ngOnInit(): void {
+    this.graphForm.controls.name.setValue(this.newGraph()?.name ?? 'My Graph')
+    this.graphForm.controls.numOfNodes.setValue(this.newGraph()?.numOfNodes ?? 3)
+  }
 
   onSubmit() {
     if (!this.graphForm.valid) {

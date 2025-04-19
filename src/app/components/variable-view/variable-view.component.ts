@@ -11,12 +11,12 @@ import { JsonPipe } from '@angular/common';
 })
 export class VariableViewComponent {
 
-  private objCoverter = inject(ObjectConverterService);
+  private objConverter = inject(ObjectConverterService);
 
   demo = input<Demo>();
   currentStep = input<number>(0);
 
   get variables() {
-    return this.objCoverter.objectToArray(this.demo()?.snapshotSequence[this.currentStep()].variables);
+    return this.objConverter.objectToArray(this.demo()?.snapshotSequence[this.currentStep()].variables);
   }
 }

@@ -115,7 +115,7 @@ describe('MatrixToListConverter', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(GraphConverterService);
-    list = service.matrixToList([[0, 1],[0, 0]])
+    list = service.matrixToList([[0, 1], [0, 0]])
   });
 
   it('should be created', () => {

@@ -42,7 +42,7 @@ export class MediaControlComponent {
     this.playLoop();
   }
 
-  async playLoop() {
+  private async playLoop() {
     while (this.playing()) {
       if (this.value() < this.max()) {
         this.value.update(x => x + 1);
@@ -53,7 +53,7 @@ export class MediaControlComponent {
     }
   }
 
-  async wait(ms: number) {
+  private async wait(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

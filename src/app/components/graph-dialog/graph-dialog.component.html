@@ -3,6 +3,6 @@
   @if (currentContent == 0) {
     <graph-form  [(newGraph)]="newGraph" (onFormComplete)="changeContent(1)"></graph-form>
   } @else {
-    <matrix-form [(newGraph)]="newGraph" (onFromComplete)="graphComplete()" (onPreviousStep)="changeContent(0)"></matrix-form>
+    <matrix-form [(newGraph)]="newGraph" (onFormComplete)="graphComplete()" (onPreviousStep)="changeContent(0)"></matrix-form>
   }
 </mat-dialog-content>

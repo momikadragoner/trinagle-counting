@@ -15,10 +15,18 @@ import { GraphConverterService } from '../../../services/graph-converter.service
 })
 export class MatrixFormComponent implements OnInit {
   newGraph = model<GraphData>()
-  onFromComplete = output<void>()
+  onFormComplete = output<void>()
   onPreviousStep = output<void>()
+  private converter: GraphConverterService = inject(GraphConverterService);
+  private formBuilder = inject(FormBuilder);
 
-  gcs: GraphConverterService = inject(GraphConverterService);
+  matrixForm = this.formBuilder.group({
+    matrix: this.formBuilder.array([]),
+  });
+
+  get matrix() {
+    return this.matrixForm.get('matrix') as FormArray;
+  }
 
   ngOnInit(): void {
     if (!this.newGraph()) {
@@ -33,22 +41,13 @@ export class MatrixFormComponent implements OnInit {
     }
   }
 
-  private formBuilder = inject(FormBuilder);
-  matrixForm = this.formBuilder.group({
-    matrix: this.formBuilder.array([]),
-  });
-
-  get matrix() {
-    return this.matrixForm.get('matrix') as FormArray;
-  }
-
   addMatrixElement() {
     this.matrix.push(this.formBuilder.control(false));
   }
 
   getGraph() {
     let matrixArray: number[] = (this.matrix.value as boolean[]).map(x => x ? 1 : 0);
-    return this.gcs.arrayToNodes(matrixArray, this.newGraph()?.numOfNodes ?? 0);
+    return this.converter.arrayToNodes(matrixArray, this.newGraph()?.numOfNodes ?? 0);
   }
 
   onSubmit() {
@@ -63,7 +62,7 @@ export class MatrixFormComponent implements OnInit {
         matrixArray: matrixArray
       } : undefined;
     })
-    this.onFromComplete.emit();
+    this.onFormComplete.emit();
   }
 
   onPrevious() {

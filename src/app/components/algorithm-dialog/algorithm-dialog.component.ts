@@ -16,7 +16,7 @@ export class AlgorithmDialogComponent {
   readonly data = inject<AlgoType>(MAT_DIALOG_DATA);
   readonly algo = model(this.data);
 
-  optoins = [
+  options = [
     {value: AlgoType.Node, name: 'Node Iterator Algorithm'},
     {value: AlgoType.Link, name: 'Edge Iterator Algorithm'},
     {value: AlgoType.Matrix, name: 'Matrix Multiplication Algorithm'},
