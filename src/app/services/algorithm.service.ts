@@ -25,7 +25,7 @@ export class AlgorithmService {
     this.sequence.push({ lineIndex: line, usedNodes: nodes, usedLinks: links, variables: variables });
   }
 
-  public nodeIteratorTrinagleCount(graph: Graph): number {
+  public nodeIteratorTriangleCount(graph: Graph): number {
     this.clearSequence();
     let count = 0; // Line 1
     this.logLine(0, [], [], { count })
@@ -50,7 +50,7 @@ export class AlgorithmService {
     return result;
   }
 
-  public edgeIteratorTrinagleCount(list: number[][]): number {
+  public edgeIteratorTriangleCount(list: number[][]): number {
     this.clearSequence()
     let count = 0;
     this.logLine(0, [], [], { count });
@@ -134,8 +134,8 @@ export class AlgorithmService {
   private adjacentPairs(v: Node, graph: Graph): [Node, Node][] {
     let pairs: [Node, Node][] = [];
     let neighbours = graph.links
-      .filter(l => l.source == v || l.target == v)
-      .map(l => l.source == v ? l.target : l.source);
+      .filter(l => l.source.id == v.id || l.target.id == v.id)
+      .map(l => l.source.id == v.id ? l.target : l.source);
     for (let i = 0; i < neighbours.length; i++) {
       const fst = neighbours[i];
       for (let j = i + 1; j < neighbours.length; j++) {
@@ -147,7 +147,7 @@ export class AlgorithmService {
   }
 
   private containsLink(pair: [Node, Node], links: Link[]): boolean {
-    return links.filter(l => l.source == pair[0] && l.target == pair[1]).length > 0 ||
-      links.filter(l => l.source == pair[1] && l.target == pair[0]).length > 0;
+    return links.filter(l => l.source.id == pair[0].id && l.target.id == pair[1].id).length > 0 ||
+      links.filter(l => l.source.id == pair[1].id && l.target.id == pair[0].id).length > 0;
   }
 }

@@ -1,6 +1,5 @@
 @use '@angular/material' as mat;
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
 html {
   @include mat.theme((
     color: (
@@ -14,52 +13,9 @@ html {
 }
 
 :root {
-  // @include mat.slider-overrides((active-track-color: lightblue,
-  //     // ripple-color: orange,
-  //     handle-color: lightblue,
-  //     // hover-state-layer-color: red,
-  //   ));
   @include mat.toolbar-overrides((container-text-color: white,
       container-background-color: rgb(32, 32, 32),
     ));
-  // @include mat.sidenav-overrides((container-background-color: rgb(29, 29, 29),
-  //     container-text-color: white,
-  //     content-background-color: black));
-  // @include mat.list-overrides((//active-indicator-color: orange,
-  //     list-item-container-color: rgb(32, 32, 32),
-  //     list-item-label-text-color: white,
-  //     list-item-hover-label-text-color: lightblue
-  //   ));
-  // @include mat.dialog-overrides((
-  //   container-color: rgb(32, 32, 32),
-  //   subhead-color: white,
-  //   supporting-text-color: white,
-  // ));
-  // @include mat.form-field-overrides((
-  //   outlined-caret-color: white,
-  //   outlined-label-text-color: white,
-  //   outlined-focus-label-text-color: lightblue,
-  //   outlined-focus-outline-color: lightblue,
-  //   outlined-input-text-color: white,
-  //   outlined-input-text-placeholder-color: white,
-  //   outlined-hover-outline-color: lightblue,
-  //   outlined-hover-label-text-color: lightblue,
-  //   // outlined-error-hover-outline-color: pink,
-  //   // outlined-error-hover-label-text-color: pink,
-
-  // ));
-  // @include mat.button-overrides((
-  //   //rgb(114,188,212) rgba(134, 197, 218, 0.1),
-  //   text-hover-state-layer-opacity: 0.2,
-  //   text-state-layer-color: rgba(134, 197, 218),
-  //   text-ripple-color: rgb(69, 114, 129),
-  //   text-label-text-color: white,
-  // ));
-  // @include mat.checkbox-overrides((
-  //   selected-hover-state-layer-color: red,
-  //   // disabled-icon-color: white,
-  //   // selected-icon-color: lightblue,
-  // ));
 }
 
 html, body {
@@ -73,16 +29,4 @@ app-root {
   display: block;
   min-height: 100%;
   flex-direction: column;
-}
-
-mat-dialog-container {
-  // transition: width 10s ease, height 10s ease, min-width 10s ease, min-height 10s ease;
-  /* Optional: Add other styles like border-radius, box-shadow, etc. */
-  // background-color: red;
-}
-
-.mat-mdc-dialog-container {
-  // transition: width 10s ease, height 10s ease, min-width 10s ease, min-height 10s ease;
-  /* Optional: Add other styles like border-radius, box-shadow, etc. */
-  // background-color: red;
 }

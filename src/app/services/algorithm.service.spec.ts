@@ -19,31 +19,130 @@ describe('AlgorithmService', () => {
 
 describe('NodeIteratorAlgorithm', () => {
   let service: AlgorithmService;
-  let converter: GraphConverterService;
   let graph: Graph;
-  let numberOfTriangles:number;
+  let numberOfTriangles: number;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(AlgorithmService);
-    converter = TestBed.inject(GraphConverterService);
-    graph = converter.arrayToNodes([0, 1, 1, 0, 0, 1, 0, 0, 0], 3);
-    numberOfTriangles = service.nodeIteratorTrinagleCount(graph);
+    graph = {
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }],
+      links: [
+        { source: { id: 0 }, target: { id: 1 } },
+        { source: { id: 0 }, target: { id: 2 } },
+        { source: { id: 1 }, target: { id: 2 } }
+      ]
+    };
+    numberOfTriangles = service.nodeIteratorTriangleCount(graph);
   });
 
-  it('should count a trinagle', () => {
-    graph = converter.arrayToNodes([0, 1, 1, 0, 0, 1, 0, 0, 0], 3);
-    expect(service.nodeIteratorTrinagleCount(graph)).toEqual(1);
+  it('should find no triangles in empty graph', () => {
+    graph = { nodes: [], links: [] };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(0);
   });
 
-  it('should count two trinagles', () => {
-    graph = converter.arrayToNodes([0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 4);
-    expect(service.nodeIteratorTrinagleCount(graph)).toEqual(2);
+  it('should find no triangles in single vertex', () => {
+    graph = { nodes: [{ id: 0 }], links: [] };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(0);
   });
 
-  it('should count no trinagles in a line', () => {
-    graph = converter.arrayToNodes([0, 1, 1, 0, 0, 0, 0, 0, 0], 3);
-    expect(service.nodeIteratorTrinagleCount(graph)).toEqual(0);
+  it('should find no triangles in single edge', () => {
+    graph = { nodes: [{ id: 0 }, { id: 1 }], links: [{ source: { id: 0 }, target: { id: 1 } }] };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should find no triangles in a line', () => {
+    graph = {
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }],
+      links: [
+        { source: { id: 0 }, target: { id: 1 } },
+        { source: { id: 1 }, target: { id: 2 } }
+      ]
+    };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should find no triangles in a star', () => {
+    graph = {
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }],
+      links: [
+        { source: { id: 0 }, target: { id: 1 } },
+        { source: { id: 0 }, target: { id: 2 } },
+        { source: { id: 0 }, target: { id: 3 } }
+      ]
+    };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should count a triangle', () => {
+    graph = {
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }],
+      links: [
+        { source: { id: 0 }, target: { id: 1 } },
+        { source: { id: 0 }, target: { id: 2 } },
+        { source: { id: 1 }, target: { id: 2 } }
+      ]
+    };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(1);
+  });
+
+  it('should count two triangles with a common edge', () => {
+    graph = {
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }],
+      links: [
+        { source: { id: 0 }, target: { id: 1 } },
+        { source: { id: 1 }, target: { id: 2 } },
+        { source: { id: 2 }, target: { id: 0 } },
+        { source: { id: 3 }, target: { id: 1 } },
+        { source: { id: 3 }, target: { id: 2 } }
+      ]
+    };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(2);
+  });
+
+  it('should count two distinct triangles', () => {
+    graph = {
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
+      links: [
+        { source: { id: 0 }, target: { id: 1 } },
+        { source: { id: 1 }, target: { id: 2 } },
+        { source: { id: 2 }, target: { id: 0 } },
+        { source: { id: 3 }, target: { id: 4 } },
+        { source: { id: 4 }, target: { id: 5 } },
+        { source: { id: 5 }, target: { id: 3 } }
+      ]
+    };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(2);
+  });
+
+  it('should count two triangles sharing only a vertex', () => {
+    graph = {
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+      links: [
+        { source: { id: 0 }, target: { id: 1 } },
+        { source: { id: 1 }, target: { id: 2 } },
+        { source: { id: 2 }, target: { id: 0 } },
+        { source: { id: 3 }, target: { id: 4 } },
+        { source: { id: 4 }, target: { id: 2 } },
+        { source: { id: 2 }, target: { id: 3 } }
+      ]
+    };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(2);
+  });
+
+  it('should count triangles in a complete graph', () => {
+    graph = {
+      nodes: [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }],
+      links: [
+        { source: { id: 0 }, target: { id: 1 } },
+        { source: { id: 0 }, target: { id: 2 } },
+        { source: { id: 0 }, target: { id: 3 } },
+        { source: { id: 1 }, target: { id: 2 } },
+        { source: { id: 1 }, target: { id: 3 } },
+        { source: { id: 2 }, target: { id: 3 } },
+      ]
+    };
+    expect(service.nodeIteratorTriangleCount(graph)).toEqual(4);
   });
 
   it('should have SnapshotSequence getter return an array', () => {
@@ -83,33 +182,66 @@ describe('NodeIteratorAlgorithm', () => {
   });
 });
 
-describe('NodeIteratorAlgorithm', () => {
+describe('EdgeIteratorAlgorithm', () => {
   let service: AlgorithmService;
-  let converter: GraphConverterService;
   let graph: number[][];
-  let numberOfTriangles:number;
+  let numberOfTriangles: number;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(AlgorithmService);
-    converter = TestBed.inject(GraphConverterService);
-    graph = converter.arrayToList([0, 1, 1, 0, 0, 1, 0, 0, 0], 3);
-    numberOfTriangles = service.edgeIteratorTrinagleCount(graph);
+    graph = [[1, 2], [2], []];
+    numberOfTriangles = service.edgeIteratorTriangleCount(graph);
+  });
+
+  it('should find no triangles in empty graph', () => {
+    graph = [];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should find no triangles in single vertex', () => {
+    graph = [[]];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should find no triangles in single edge', () => {
+    graph = [[0], [1]];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should find no triangles in a line', () => {
+    graph = [[1], [0, 2], [1]];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should find no triangles in a star', () => {
+    graph = [[1, 2, 3], [], [], []];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(0);
   });
 
   it('should count a trinagle', () => {
-    graph = converter.arrayToList([0, 1, 1, 0, 0, 1, 0, 0, 0], 3);
-    expect(service.edgeIteratorTrinagleCount(graph)).toEqual(1);
+    graph = [[1, 2], [0, 2], [0, 1]];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(1);
   });
 
-  it('should count two trinagles', () => {
-    graph = converter.arrayToList([0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 4);
-    expect(service.edgeIteratorTrinagleCount(graph)).toEqual(2);
+  it('should count two distinct triangles', () => {
+    graph = [[1, 2], [0, 2], [0, 1], [4, 5], [3, 5], [3, 4]];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(2);
   });
 
-  it('should count no trinagles in a line', () => {
-    graph = converter.arrayToList([0, 1, 1, 0, 0, 0, 0, 0, 0], 3);
-    expect(service.edgeIteratorTrinagleCount(graph)).toEqual(0);
+  it('should count two triangles sharing an edge', () => {
+    graph = [[1, 2], [0, 2, 3], [0, 1, 3], [1, 2]];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(2);
+  });
+
+  it('should count two triangles sharing only a vertex', () => {
+    graph = [[1, 2], [0, 2], [0, 1, 3, 4], [4, 2], [3, 2]]
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(2);
+  });
+
+  it('should count triangles in a complete graph', () => {
+    graph = [[1, 2, 3], [0, 2, 3], [0, 1, 3], [0, 1, 2]];
+    expect(service.edgeIteratorTriangleCount(graph)).toEqual(4);
   });
 
   it('should have SnapshotSequence getter return an array', () => {
@@ -151,31 +283,82 @@ describe('NodeIteratorAlgorithm', () => {
 
 describe('MatrixMultiplicationAlgorithm', () => {
   let service: AlgorithmService;
-  let converter: GraphConverterService;
   let graph: number[][];
-  let numberOfTriangles:number;
+  let numberOfTriangles: number;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(AlgorithmService);
-    converter = TestBed.inject(GraphConverterService);
-    graph = converter.arrayToMatrix([0, 1, 1, 0, 0, 1, 0, 0, 0], 3);
+    graph = [[0, 1, 1], [0, 0, 1], [0, 0, 0]];
     numberOfTriangles = service.matrixMultiplicationTriangleCount(graph);
   });
 
-  it('should count a trinagle', () => {
-    graph = converter.arrayToMatrix([0, 1, 1, 0, 0, 1, 0, 0, 0], 3);
-    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(1);
+  it('should find no triangles in empty graph', () => {
+    graph = [];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(0);
   });
 
-  it('should count two trinagles', () => {
-    graph = converter.arrayToMatrix([0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 4);
-    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(2);
+  it('should find no triangles in single vertex', () => {
+    graph = [[0]];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should find no triangles in single edge', () => {
+    graph = [[0, 1], [0, 0]];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(0);
   });
 
   it('should count no trinagles in a line', () => {
-    graph = converter.arrayToMatrix([0, 1, 1, 0, 0, 0, 0, 0, 0], 3);
+    graph = [[0, 1, 1], [0, 0, 0], [0, 0, 0]];
     expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should find no triangles in a star', () => {
+    graph = [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 0]];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(0);
+  });
+
+  it('should count a trinagle', () => {
+    graph = [[0, 1, 1], [0, 0, 1], [0, 0, 0]];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(1);
+  });
+
+  it('should count two distinct triangles', () => {
+    graph = [
+      [0, 1, 1, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 1, 1],
+      [0, 0, 0, 0, 0, 1],
+      [0, 0, 0, 0, 0, 0]
+    ];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(2);
+  });
+
+  it('should count two trinagles two trinagles with a common edge', () => {
+    graph = [[0, 1, 1, 1], [0, 0, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(2);
+  });
+
+  it('should count two triangles sharing only a vertex', () => {
+    graph = [
+      [0, 1, 1, 0, 0],
+      [0, 0, 1, 0, 0],
+      [0, 0, 0, 1, 1],
+      [0, 0, 0, 0, 1],
+      [0, 0, 0, 0, 0]
+    ];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(2);
+  });
+
+  it('should count triangles in a complete graph', () => {
+    graph = [
+      [0, 1, 1, 1],
+      [0, 0, 1, 1],
+      [0, 0, 0, 1],
+      [0, 0, 0, 0],
+    ];
+    expect(service.matrixMultiplicationTriangleCount(graph)).toEqual(4);
   });
 
   it('should have SnapshotSequence getter return an array', () => {

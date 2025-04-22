@@ -9,7 +9,7 @@ export class CookieService {
   public saveGraph(graph: GraphData): boolean {
     let graphs = this.getAllGraphs() ?? [];
     if (this.isGraphSaved(graph.name)) {
-      throw Error('A graph with name "' + graph.name + '" alredy exists.')
+      throw Error('A graph with name "' + graph.name + '" already exists.')
     }
     graphs.push(graph);
     this.setCookie('graphs', graphs);
@@ -51,6 +51,11 @@ export class CookieService {
     if (graphs == undefined) return false;
     graphs = graphs.filter(g => g?.name != graphName);
     this.setCookie('graphs', graphs);
+    return true;
+  }
+
+  public deleteAllGraphs(): boolean {
+    this.setCookie('graphs', []);
     return true;
   }
 

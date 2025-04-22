@@ -73,10 +73,10 @@ export class DemoBuilderService {
   public build(): Demo {
     switch (this.demo.algoType) {
       case AlgoType.Node:
-        this.algs.nodeIteratorTrinagleCount(this.demo.graph);
+        this.algs.nodeIteratorTriangleCount(this.demo.graph);
         break;
       case AlgoType.Link:
-        this.algs.edgeIteratorTrinagleCount(this.converter.matrixToList(this.demo.adjMatrix));
+        this.algs.edgeIteratorTriangleCount(this.converter.matrixToList(this.demo.adjMatrix));
         break;
       case AlgoType.Matrix:
         this.algs.matrixMultiplicationTriangleCount(this.demo.adjMatrix);
