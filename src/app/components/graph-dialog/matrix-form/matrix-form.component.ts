@@ -6,10 +6,11 @@ import { GraphData } from '../../../model/graph-data.model';
 import { Graph } from '../../../model/graph.model';
 import { GraphComponent } from "../../graph/graph.component";
 import { GraphConverterService } from '../../../services/graph-converter.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'matrix-form',
-  imports: [ReactiveFormsModule, MatCheckboxModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatCheckboxModule, MatButtonModule],
   templateUrl: './matrix-form.component.html',
   styleUrl: './matrix-form.component.scss'
 })
