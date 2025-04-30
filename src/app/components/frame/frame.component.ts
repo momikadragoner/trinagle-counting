@@ -42,8 +42,14 @@ export class FrameComponent {
   readonly dialog = inject(MatDialog);
 
   graphData: GraphData;
-  graphArray: number[] = [0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0];
-  graphMatrix: number[][] = this.converter.arrayToMatrix(this.graphArray, 4);
+  graphArray: number[] = [
+    0, 1, 1, 1, 0,
+    0, 0, 1, 1, 0,
+    0, 0, 0, 0, 1,
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0,
+  ];
+  graphMatrix: number[][] = this.converter.arrayToMatrix(this.graphArray, 5);
   graphList: number[][] = this.converter.matrixToList(this.graphMatrix);
   graph: Graph = this.converter.matrixToNodes(this.graphMatrix);
   algo: AlgoType = AlgoType.Node;
@@ -53,7 +59,7 @@ export class FrameComponent {
 
   constructor() {
     let graph: Graph = this.converter.matrixToNodes(this.graphMatrix);
-    this.graphData = { name: "Example Graph", numOfNodes: 4, matrixArray: this.graphArray };
+    this.graphData = { name: "Example Graph", numOfNodes: 5, matrixArray: this.graphArray };
     this.demo = this.demoBuilder
       .setAlgorithm(this.algo)
       .setGraph(graph)
