@@ -14,9 +14,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'trinagle-counting' title`, () => {
+  it(`should have the 'triangle-counting' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('trinagle-counting');
+    expect(app.title).toEqual('triangle-counting');
   });
 });
