@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "trinagle-counting": {
+    "triangle-counting": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/trinagle-counting",
+            "outputPath": "dist/triangle-counting",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "trinagle-counting:build:production"
+              "buildTarget": "triangle-counting:build:production"
             },
             "development": {
-              "buildTarget": "trinagle-counting:build:development"
+              "buildTarget": "triangle-counting:build:development"
             }
           },
           "defaultConfiguration": "development"
